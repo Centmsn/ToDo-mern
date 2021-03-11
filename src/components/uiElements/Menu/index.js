@@ -18,17 +18,24 @@ const menuLinks = [
   },
 ];
 
-const Menu = () => {
+const Menu = ({ title }) => {
   return (
     <MenuBar>
+      {title && <MenuTitle>{title}</MenuTitle>}
       <MenuList listItems={menuLinks} />
     </MenuBar>
   );
 };
 
+const MenuTitle = styled.h1`
+  margin-right: auto;
+  margin-left: 1rem;
+  text-align: left;
+  color: ${({ theme }) => theme.colors.gray};
+`;
+
 const MenuBar = styled.div`
-  width: 100%;
-  height: 5rem;
+  grid-area: 1/1/2/-1;
 
   display: flex;
   align-items: center;

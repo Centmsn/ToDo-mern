@@ -4,9 +4,10 @@ const theme = {
   colors: {
     main: "rgb(255, 255, 222)",
     off: "rgb(255, 219, 120)",
+    gray: "rgb(140, 140, 140)",
   },
   fonts: {
-    main: "Comfortaa",
+    main: "'Blinker', sans-serif",
   },
 };
 
