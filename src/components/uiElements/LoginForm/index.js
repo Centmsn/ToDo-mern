@@ -1,12 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+
+import AuthContext from "../../../context/Auth";
 import Button from "../Button";
 import Input from "../Input";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 const LoginForm = () => {
   const [isInSignUpMode, setIsInSignUpMode] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const handleSwitchMode = () => {
     setIsInSignUpMode(prev => !prev);

@@ -30,7 +30,6 @@ const Menu = ({ title }) => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
 
   const sideMenuHandler = direction => {
-    console.log(direction);
     if (typeof direction === "boolean") {
       setIsSideMenuOpen(direction);
     } else {

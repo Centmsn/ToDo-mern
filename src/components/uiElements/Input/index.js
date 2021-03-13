@@ -6,11 +6,11 @@ import PropTypes from "prop-types";
  * @param {Object} props - react props
  * @returns {JSX.Element}
  */
-const Input = ({ type = "text", desc, onChange, error = "dupa dupa dupa" }) => {
+const Input = ({ type = "text", desc, onChange, error = null }) => {
   return (
     <Label>
       <h3>{desc}</h3>
-      <InputEl type={type} onChange={onChange} />
+      <InputEl type={type} onChange={onChange} error={error} />
       {error && <span>{error}</span>}
     </Label>
   );
@@ -29,6 +29,11 @@ Input.prototypes = {
    * Function which is triggered on every state change
    */
   onChange: PropTypes.func.isRequired,
+
+  /**
+   * Error message to display below input
+   */
+  error: PropTypes.string,
 };
 
 const Label = styled.label`
@@ -63,9 +68,13 @@ const InputEl = styled.input`
   font-size: 1.5rem;
 
   border: none;
-  box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.gray};
+  box-shadow: 0 0 0 2px
+    ${({ theme, error }) => (error ? theme.colors.red : theme.colors.gray)};
   border-radius: 5px;
   outline: none;
+
+  background-color: ${({ theme, error }) =>
+    error ? "rgb(237, 204, 197)" : "white"};
 
   padding: 0.25rem;
 
