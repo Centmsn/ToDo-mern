@@ -1,5 +1,6 @@
 import GlobalStyle from "../context/globalStyle";
 import { Switch, Route } from "react-router-dom";
+import { useState } from "react";
 
 import Theme from "../context/Theme";
 import MainContainer from "./uiElements/MainContainer";

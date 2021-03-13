@@ -8,8 +8,16 @@ const GlobalStyle = createGlobalStyle`
         font-family: ${({ theme }) => theme.fonts.main};
     }
 
+    body {
+        overflow: hidden;
+    }
+
     a {
         text-decoration: none;
+    }
+
+    button {
+        border: none;
     }
 `;
 
