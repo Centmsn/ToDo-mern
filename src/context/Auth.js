@@ -1,11 +1,22 @@
 import { createContext, useState } from "react";
 
-export const AuthContext = createContext(null);
+const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  const handleStatusChange = isLogged => {
+    if (typeof isLogged === "boolean") {
+      setIsLoggedIn(isLogged);
+    } else {
+      console.error(`Expected boolean, instead got ${typeof isLogged}`);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={(isLoggedIn, setIsLoggedIn)}>
+    <AuthContext.Provider
+      value={{ isLoggedIn: isLoggedIn, setIsLoggedIn: handleStatusChange }}
+    >
       {children}
     </AuthContext.Provider>
   );

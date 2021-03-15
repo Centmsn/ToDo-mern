@@ -1,21 +1,50 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faHistory } from "@fortawesome/free-solid-svg-icons";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
+import { useState } from "react";
 
 import PageContainer from "../../uiElements/PageContainer";
+import RoundButton from "../../uiElements/RoundButton";
+import AddNote from "../../uiElements/AddNote";
 
 const UserPanel = () => {
+  const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const handleAddNote = () => {
+    setIsAddNoteOpen(prev => !prev);
+  };
+
+  const closeAllWindows = () => {
+    setIsAddNoteOpen(false);
+    setIsHistoryOpen(false);
+    setIsSettingsOpen(false);
+  };
+
   return (
     <PageContainer>
       <Options>
         <ButtonContainer>
-          <OptionButton></OptionButton>
+          <RoundButton text="Add note" onClick={handleAddNote}>
+            <FontAwesomeIcon icon={faPlus} />
+          </RoundButton>
         </ButtonContainer>
         <ButtonContainer>
-          <OptionButton></OptionButton>
+          <RoundButton text="History">
+            <FontAwesomeIcon icon={faHistory} />
+          </RoundButton>
         </ButtonContainer>
         <ButtonContainer>
-          <OptionButton></OptionButton>
+          <RoundButton text="Settings">
+            <FontAwesomeIcon icon={faCog} />
+          </RoundButton>
         </ButtonContainer>
       </Options>
+
+      <AddNote isOpen={isAddNoteOpen} />
     </PageContainer>
   );
 };
@@ -29,18 +58,8 @@ const Options = styled.section`
   align-items: center;
 `;
 
-const OptionButton = styled.button`
-  width: 7rem;
-  height: 7rem;
-
-  border-radius: 50%;
-
-  background-color: ${({ theme }) => theme.colors.off};
-
-  cursor: pointer;
-`;
-
 const ButtonContainer = styled.div`
+  position: relative;
   flex-basis: 100%;
 
   display: flex;

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Button = ({ path, as, onClick, children }) => {
+const Button = ({ path, as, onClick, children, isActive }) => {
   return (
     <Btn as={as} to={path} onClick={onClick}>
       {children}
@@ -48,7 +48,8 @@ const Btn = styled(Link)`
     border-radius: 5px;
 
     background-color: ${({ theme }) => theme.colors.off};
-    clip-path: circle(0 at left bottom);
+    clip-path: ${({ isActive }) =>
+      isActive ? "circle(100% at left bottom)" : "circle(0 at left bottom)"};
     transition: 0.4s linear;
   }
 

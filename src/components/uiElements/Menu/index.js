@@ -1,25 +1,17 @@
-import styled from "styled-components";
+import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
-import { CSSTransition } from "react-transition-group";
-import { useState } from "react";
+import styled from "styled-components";
+import { useState, useContext } from "react";
+import { useParams } from "react-router-dom";
 
+import AuthContext from "../../../context/Auth";
 import MenuList from "./MenuList";
 import LoginForm from "../LoginForm";
-
-const menuLinks = [
-  {
-    text: "Home",
-    path: "/",
-    icon: <FontAwesomeIcon icon={faHome} />,
-  },
-  {
-    text: "Log in",
-    icon: <FontAwesomeIcon icon={faPowerOff} />,
-  },
-];
+import SideBar from "../SideBar";
 
 /**
  * Renders navigation bar
@@ -28,6 +20,26 @@ const menuLinks = [
  */
 const Menu = ({ title }) => {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+  const { isLoggedIn } = useContext(AuthContext);
+  const path = useParams();
+
+  const menuLinks = [
+    {
+      text: "Dashboard",
+      path: "/TESTOWEID",
+      icon: <FontAwesomeIcon icon={faClipboard} />,
+      isActive: path === "/TESTOWEID",
+    },
+    {
+      text: "Home",
+      path: "/",
+      icon: <FontAwesomeIcon icon={faHome} />,
+    },
+    {
+      text: "Log in",
+      icon: <FontAwesomeIcon icon={faPowerOff} />,
+    },
+  ];
 
   const sideMenuHandler = direction => {
     if (typeof direction === "boolean") {
@@ -37,24 +49,18 @@ const Menu = ({ title }) => {
     }
   };
 
+  const links = isLoggedIn ? menuLinks : menuLinks.slice(1);
+
   return (
     <>
       <MenuBar>
         {title && <MenuTitle>{title}</MenuTitle>}
-        <MenuList
-          listItems={menuLinks}
-          toggleMenuVisibility={sideMenuHandler}
-        />
+        <MenuList listItems={links} toggleMenuVisibility={sideMenuHandler} />
       </MenuBar>
 
-      <CSSTransition
-        in={isSideMenuOpen}
-        classNames="test"
-        timeout={300}
-        unmountOnExit
-      >
+      <SideBar isOpen={isSideMenuOpen}>
         <LoginForm />
-      </CSSTransition>
+      </SideBar>
     </>
   );
 };
