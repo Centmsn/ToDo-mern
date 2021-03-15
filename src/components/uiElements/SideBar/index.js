@@ -7,10 +7,20 @@ import PropTypes from "prop-types";
  * @param {Object} props - react props
  * @returns {JSX.Element}
  */
-const SideBar = ({ isOpen, children }) => {
+const SideBar = ({ children, isOpen, size = "30vw" }) => {
+  let timeout = size.match(/\d/g).join("") * 1;
+
+  if (timeout < 100) timeout = timeout * 10;
+  else if (timeout > 1000) timeout = 1000;
+
   return (
-    <CSSTransition in={isOpen} classNames={"bar"} timeout={300} unmountOnExit>
-      <Wrapper>{children}</Wrapper>
+    <CSSTransition
+      in={isOpen}
+      classNames={"bar"}
+      timeout={timeout}
+      unmountOnExit
+    >
+      <Wrapper size={size}>{children}</Wrapper>
     </CSSTransition>
   );
 };
@@ -20,6 +30,11 @@ SideBar.propTypes = {
    * Determinates if component is visible
    */
   isOpen: PropTypes.bool.isRequired,
+
+  /**
+   * Sets components width, all units are accepted
+   */
+  size: PropTypes.string,
 };
 
 const Wrapper = styled.div`
@@ -28,7 +43,7 @@ const Wrapper = styled.div`
   right: 0;
   bottom: 0;
 
-  width: 30vw;
+  width: ${({ size }) => size};
   min-width: 200px;
 
   display: flex;
@@ -54,7 +69,7 @@ const Wrapper = styled.div`
   }
 
   &.bar-enter {
-    transform: translateX(30vw);
+    transform: translateX(${({ size }) => size});
   }
 
   &.bar-enter-active {
@@ -66,7 +81,7 @@ const Wrapper = styled.div`
   }
 
   &.bar-exit-active {
-    transform: translateX(30vw);
+    transform: translateX(${({ size }) => size});
   }
 `;
 

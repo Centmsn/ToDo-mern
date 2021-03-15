@@ -1,11 +1,10 @@
-import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import AuthContext from "../../../context/Auth";
@@ -19,8 +18,8 @@ import SideBar from "../SideBar";
  * @returns {JSX.Element}
  */
 const Menu = ({ title }) => {
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-  const { isLoggedIn } = useContext(AuthContext);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const path = useParams();
 
   const menuLinks = [
@@ -36,16 +35,20 @@ const Menu = ({ title }) => {
       icon: <FontAwesomeIcon icon={faHome} />,
     },
     {
-      text: "Log in",
+      text: isLoggedIn ? "Logout" : "Login",
       icon: <FontAwesomeIcon icon={faPowerOff} />,
     },
   ];
 
   const sideMenuHandler = direction => {
-    if (typeof direction === "boolean") {
-      setIsSideMenuOpen(direction);
+    if (!isLoggedIn) {
+      if (typeof direction === "boolean") {
+        setIsFormOpen(direction);
+      } else {
+        setIsFormOpen(!isFormOpen);
+      }
     } else {
-      setIsSideMenuOpen(prev => !prev);
+      setIsLoggedIn(false);
     }
   };
 
@@ -58,9 +61,11 @@ const Menu = ({ title }) => {
         <MenuList listItems={links} toggleMenuVisibility={sideMenuHandler} />
       </MenuBar>
 
-      <SideBar isOpen={isSideMenuOpen}>
-        <LoginForm />
-      </SideBar>
+      {!isLoggedIn && (
+        <SideBar isOpen={isFormOpen}>
+          <LoginForm />
+        </SideBar>
+      )}
     </>
   );
 };

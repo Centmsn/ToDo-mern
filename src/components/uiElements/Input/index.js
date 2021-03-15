@@ -6,17 +6,60 @@ import PropTypes from "prop-types";
  * @param {Object} props - react props
  * @returns {JSX.Element}
  */
-const Input = ({ type = "text", desc, onChange, error = null }) => {
+const Input = ({
+  type = "text",
+  desc,
+  onChange,
+  error = null,
+  size = "medium",
+}) => {
+  const handleInputChange = e => {
+    onChange(e.target.value);
+  };
+
+  let inputSize;
+
+  if (size === "small") {
+    inputSize = "50%";
+  } else if (size === "medium") {
+    inputSize = "75%";
+  } else if (size === "large") {
+    inputSize = "90%";
+  }
+
+  const textAreaStyle = {
+    resize: "none",
+    height: "200px",
+    flexBasis: inputSize,
+  };
+
+  const InputType =
+    type === "textarea" ? (
+      <InputEl
+        as={"textarea"}
+        onChange={handleInputChange}
+        error={error}
+        style={textAreaStyle}
+      />
+    ) : (
+      <InputEl
+        type={type}
+        onChange={handleInputChange}
+        error={error}
+        style={{ flexBasis: inputSize }}
+      />
+    );
+
   return (
     <Label>
       <h3>{desc}</h3>
-      <InputEl type={type} onChange={onChange} error={error} />
+      {InputType}
       {error && <span>{error}</span>}
     </Label>
   );
 };
 
-Input.prototypes = {
+Input.propTypes = {
   /**
    * input type - default is text
    */
@@ -34,6 +77,11 @@ Input.prototypes = {
    * Error message to display below input
    */
   error: PropTypes.string,
+
+  /**
+   * Sets input size
+   */
+  size: PropTypes.oneOf(["small", "medium", "large"]),
 };
 
 const Label = styled.label`
@@ -68,10 +116,10 @@ const InputEl = styled.input`
   font-size: 1.5rem;
 
   border: none;
-  box-shadow: 0 0 0 2px
-    ${({ theme, error }) => (error ? theme.colors.red : theme.colors.gray)};
   border-radius: 5px;
   outline: none;
+  box-shadow: 0 0 0 2px
+    ${({ theme, error }) => (error ? theme.colors.red : theme.colors.gray)};
 
   background-color: ${({ theme, error }) =>
     error ? "rgb(237, 204, 197)" : "white"};
