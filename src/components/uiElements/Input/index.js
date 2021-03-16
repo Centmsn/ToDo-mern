@@ -15,7 +15,7 @@ const Input = ({
   value = "",
 }) => {
   const handleInputChange = e => {
-    onChange(e.target.value);
+    onChange({ value: e.target.value, error: null });
   };
 
   let inputSize;
@@ -114,6 +114,7 @@ const Label = styled.label`
   }
 
   span {
+    margin-top: 0.25rem;
     color: ${({ theme }) => theme.colors.red};
   }
 `;

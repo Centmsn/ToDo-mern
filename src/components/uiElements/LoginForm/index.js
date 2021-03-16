@@ -9,16 +9,16 @@ import { useState, useContext } from "react";
 
 const LoginForm = () => {
   const [isInSignUpMode, setIsInSignUpMode] = useState(false);
-  const [nameValue, setNameValue] = useState("");
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const [name, setName] = useState({ value: "", error: null });
+  const [email, setEmail] = useState({ value: "", error: null });
+  const [password, setPassword] = useState({ value: "", error: null });
 
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const handleSwitchMode = () => {
-    setNameValue("");
-    setEmailValue("");
-    setPasswordValue("");
+    setName({ value: "", error: null });
+    setEmail({ value: "", error: null });
+    setPassword({ value: "", error: null });
 
     setIsInSignUpMode(prev => !prev);
   };
@@ -29,9 +29,9 @@ const LoginForm = () => {
     const response = await fetch("http://localhost:3001/api/users/signup", {
       method: "POST",
       body: JSON.stringify({
-        name: nameValue,
-        email: emailValue,
-        password: passwordValue,
+        name: name.value,
+        email: email.value,
+        password: password.value,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +40,12 @@ const LoginForm = () => {
 
     const responseData = await response.json();
 
-    // console.log({ ok: response.ok, status: response.status });
+    const error = responseData.message.split(" ")[0];
+
+    if (error.toLowerCase() === "email") {
+      setEmail(prev => ({ value: prev.value, error: responseData.message }));
+    }
+
     if (response.ok && response.status === 201) {
       setIsLoggedIn(true);
     }
@@ -61,21 +66,24 @@ const LoginForm = () => {
           <Input
             type="text"
             desc="Name"
-            onChange={setNameValue}
-            value={nameValue}
+            onChange={setName}
+            value={name.value}
+            error={name.error}
           />
         )}
         <Input
           type="email"
           desc="Email"
-          onChange={setEmailValue}
-          value={emailValue}
+          onChange={setEmail}
+          value={email.value}
+          error={email.error}
         />
         <Input
           type="password"
           desc="Password"
-          onChange={setPasswordValue}
-          value={passwordValue}
+          onChange={setPassword}
+          value={password.value}
+          error={password.error}
         />
         <Button as="button" onClick={() => {}}>
           <span>Submit</span>
