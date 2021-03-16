@@ -4,7 +4,7 @@ const MenuListItem = ({ text, path, icon, toggleMenuVisibility }) => {
   if (path) {
     return (
       <li>
-        <Button path={path} onClick={() => toggleMenuVisibility(false)}>
+        <Button path={path}>
           <span>{icon}</span> <span>{text}</span>
         </Button>
       </li>

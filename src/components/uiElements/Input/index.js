@@ -12,6 +12,7 @@ const Input = ({
   onChange,
   error = null,
   size = "medium",
+  value = "",
 }) => {
   const handleInputChange = e => {
     onChange(e.target.value);
@@ -40,6 +41,7 @@ const Input = ({
         onChange={handleInputChange}
         error={error}
         style={textAreaStyle}
+        value={value}
       />
     ) : (
       <InputEl
@@ -47,6 +49,7 @@ const Input = ({
         onChange={handleInputChange}
         error={error}
         style={{ flexBasis: inputSize }}
+        value={value}
       />
     );
 
@@ -82,6 +85,11 @@ Input.propTypes = {
    * Sets input size
    */
   size: PropTypes.oneOf(["small", "medium", "large"]),
+
+  /**
+   * value - for controlled inputs
+   */
+  value: PropTypes.string,
 };
 
 const Label = styled.label`

@@ -4,6 +4,7 @@ import { faHistory } from "@fortawesome/free-solid-svg-icons";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState, useContext } from "react";
+
 import AuthContext from "../../../context/Auth";
 import AddNote from "../../uiElements/AddNote";
 import NotesHistory from "../../uiElements/NotesHistory";
