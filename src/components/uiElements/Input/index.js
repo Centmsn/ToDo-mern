@@ -10,7 +10,6 @@ const Input = ({
   type = "text",
   desc,
   onChange,
-  error = null,
   size = "medium",
   value = "",
 }) => {
@@ -39,7 +38,6 @@ const Input = ({
       <InputEl
         as={"textarea"}
         onChange={handleInputChange}
-        error={error}
         style={textAreaStyle}
         value={value}
       />
@@ -47,7 +45,6 @@ const Input = ({
       <InputEl
         type={type}
         onChange={handleInputChange}
-        error={error}
         style={{ flexBasis: inputSize }}
         value={value}
       />
@@ -57,7 +54,6 @@ const Input = ({
     <Label>
       <h3>{desc}</h3>
       {InputType}
-      {error && <span>{error}</span>}
     </Label>
   );
 };
@@ -75,11 +71,6 @@ Input.propTypes = {
    * Function which is triggered on every state change
    */
   onChange: PropTypes.func.isRequired,
-
-  /**
-   * Error message to display below input
-   */
-  error: PropTypes.string,
 
   /**
    * Sets input size
@@ -112,11 +103,6 @@ const Label = styled.label`
   h3 {
     color: white;
   }
-
-  span {
-    margin-top: 0.25rem;
-    color: ${({ theme }) => theme.colors.red};
-  }
 `;
 
 const InputEl = styled.input`
@@ -127,11 +113,9 @@ const InputEl = styled.input`
   border: none;
   border-radius: 5px;
   outline: none;
-  box-shadow: 0 0 0 2px
-    ${({ theme, error }) => (error ? theme.colors.red : theme.colors.gray)};
+  box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.gray};
 
-  background-color: ${({ theme, error }) =>
-    error ? "rgb(237, 204, 197)" : "white"};
+  background-color: white;
 
   padding: 0.25rem;
 

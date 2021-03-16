@@ -1,24 +1,33 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
+import { useState, useContext, useEffect } from "react";
 
 import AuthContext from "../../../context/Auth";
 import Button from "../Button";
 import Input from "../Input";
-import styled from "styled-components";
-import { useState, useContext } from "react";
+import Spinner from "../Spinner";
+import { useHttpRequest } from "../../../hooks/useHttpRequest";
 
 const LoginForm = () => {
   const [isInSignUpMode, setIsInSignUpMode] = useState(false);
-  const [name, setName] = useState({ value: "", error: null });
-  const [email, setEmail] = useState({ value: "", error: null });
-  const [password, setPassword] = useState({ value: "", error: null });
+  const [name, setName] = useState({ value: "" });
+  const [email, setEmail] = useState({ value: "" });
+  const [password, setPassword] = useState({ value: "" });
 
+  const { error, isLoading, sendRequest, clearError } = useHttpRequest();
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
+  useEffect(() => {
+    clearError();
+  }, [name, email, password, clearError]);
+
   const handleSwitchMode = () => {
-    setName({ value: "", error: null });
-    setEmail({ value: "", error: null });
-    setPassword({ value: "", error: null });
+    setName({ value: "" });
+    setEmail({ value: "" });
+    setPassword({ value: "" });
+
+    clearError();
 
     setIsInSignUpMode(prev => !prev);
   };
@@ -26,28 +35,30 @@ const LoginForm = () => {
   const handleFormSubmit = async e => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:3001/api/users/signup", {
-      method: "POST",
-      body: JSON.stringify({
-        name: name.value,
-        email: email.value,
-        password: password.value,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const responseData = await sendRequest(
+        `http://localhost:3001/api/users/${
+          isInSignUpMode ? "signup" : "login"
+        }`,
+        "POST",
+        JSON.stringify({
+          name: isInSignUpMode ? name.value : null,
+          email: email.value,
+          password: password.value,
+        }),
+        {
+          "Content-Type": "application/json",
+        }
+      );
 
-    const responseData = await response.json();
-
-    const error = responseData.message.split(" ")[0];
-
-    if (error.toLowerCase() === "email") {
-      setEmail(prev => ({ value: prev.value, error: responseData.message }));
-    }
-
-    if (response.ok && response.status === 201) {
-      setIsLoggedIn(true);
+      if (
+        responseData?.statusCode === 201 ||
+        (!isInSignUpMode && responseData?.statusCode === 200)
+      ) {
+        setIsLoggedIn(true);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -61,14 +72,15 @@ const LoginForm = () => {
     <>
       <FormTitle>{titleContent}</FormTitle>
 
+      {isLoading && <Spinner text="Loading" />}
       <Form onSubmit={handleFormSubmit}>
+        {error && <FormError>{error}</FormError>}
         {isInSignUpMode && (
           <Input
             type="text"
             desc="Name"
             onChange={setName}
             value={name.value}
-            error={name.error}
           />
         )}
         <Input
@@ -76,14 +88,12 @@ const LoginForm = () => {
           desc="Email"
           onChange={setEmail}
           value={email.value}
-          error={email.error}
         />
         <Input
           type="password"
           desc="Password"
           onChange={setPassword}
           value={password.value}
-          error={password.error}
         />
         <Button as="button" onClick={() => {}}>
           <span>Submit</span>
@@ -107,7 +117,19 @@ const Form = styled.form`
   align-items: center;
 `;
 
+const FormError = styled.div`
+  margin-bottom: 1rem;
+
+  border-radius: 5px;
+
+  color: ${({ theme }) => theme.colors.red};
+  background-color: rgb(237, 204, 197);
+
+  padding: 0.5rem;
+`;
+
 const FormTitle = styled.h2`
+  z-index: 999;
   flex-basis: 100%;
 
   text-align: center;
