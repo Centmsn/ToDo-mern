@@ -11,21 +11,21 @@ import { useHttpRequest } from "../../../hooks/useHttpRequest";
 
 const LoginForm = () => {
   const [isInSignUpMode, setIsInSignUpMode] = useState(false);
-  const [name, setName] = useState({ value: "" });
-  const [email, setEmail] = useState({ value: "" });
-  const [password, setPassword] = useState({ value: "" });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const { error, isLoading, sendRequest, clearError } = useHttpRequest();
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { setIsLoggedIn, setUserID } = useContext(AuthContext);
 
   useEffect(() => {
     clearError();
   }, [name, email, password, clearError]);
 
   const handleSwitchMode = () => {
-    setName({ value: "" });
-    setEmail({ value: "" });
-    setPassword({ value: "" });
+    setName("");
+    setEmail("");
+    setPassword("");
 
     clearError();
 
@@ -42,9 +42,9 @@ const LoginForm = () => {
         }`,
         "POST",
         JSON.stringify({
-          name: isInSignUpMode ? name.value : null,
-          email: email.value,
-          password: password.value,
+          name: isInSignUpMode ? name : null,
+          email: email,
+          password: password,
         }),
         {
           "Content-Type": "application/json",
@@ -56,6 +56,7 @@ const LoginForm = () => {
         (!isInSignUpMode && responseData?.statusCode === 200)
       ) {
         setIsLoggedIn(true);
+        setUserID(responseData.userID);
       }
     } catch (err) {
       console.log(err);
@@ -72,29 +73,23 @@ const LoginForm = () => {
     <>
       <FormTitle>{titleContent}</FormTitle>
 
-      {isLoading && <Spinner text="Loading" />}
+      {isLoading && <Spinner text="Please wait" />}
+
       <Form onSubmit={handleFormSubmit}>
         {error && <FormError>{error}</FormError>}
         {isInSignUpMode && (
-          <Input
-            type="text"
-            desc="Name"
-            onChange={setName}
-            value={name.value}
-          />
+          <Input type="text" desc="Name" onChange={setName} value={name} />
         )}
-        <Input
-          type="email"
-          desc="Email"
-          onChange={setEmail}
-          value={email.value}
-        />
+
+        <Input type="email" desc="Email" onChange={setEmail} value={email} />
+
         <Input
           type="password"
           desc="Password"
           onChange={setPassword}
-          value={password.value}
+          value={password}
         />
+
         <Button as="button" onClick={() => {}}>
           <span>Submit</span>
           <span>

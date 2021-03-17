@@ -57,6 +57,7 @@ Spinner.propTypes = {
 
 const Container = styled.div`
   position: absolute;
+  z-index: 99999;
   top: 50%;
   left: 50%;
 

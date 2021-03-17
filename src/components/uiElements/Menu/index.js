@@ -5,7 +5,7 @@ import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 import AuthContext from "../../../context/Auth";
 import MenuList from "./MenuList";
@@ -21,6 +21,7 @@ const Menu = ({ title }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const path = useParams();
+  const history = useHistory();
 
   const menuLinks = [
     {
@@ -48,6 +49,7 @@ const Menu = ({ title }) => {
         setIsFormOpen(!isFormOpen);
       }
     } else {
+      history.push("/");
       setIsLoggedIn(false);
     }
   };

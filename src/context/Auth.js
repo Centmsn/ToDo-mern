@@ -4,6 +4,7 @@ const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [userID, setUserID] = useState(null);
 
   const handleStatusChange = isLogged => {
     if (typeof isLogged === "boolean") {
@@ -18,6 +19,8 @@ export const AuthContextProvider = ({ children }) => {
       value={{
         isLoggedIn: isLoggedIn,
         setIsLoggedIn: handleStatusChange,
+        userID: userID,
+        setUserID: setUserID,
       }}
     >
       {children}

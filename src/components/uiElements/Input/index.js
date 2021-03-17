@@ -14,7 +14,7 @@ const Input = ({
   value = "",
 }) => {
   const handleInputChange = e => {
-    onChange({ value: e.target.value, error: null });
+    onChange(e.target.value);
   };
 
   let inputSize;
