@@ -3,7 +3,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faHistory } from "@fortawesome/free-solid-svg-icons";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import AuthContext from "../../../context/Auth";
 import AddNote from "../../uiElements/AddNote";
@@ -11,12 +11,34 @@ import NotesHistory from "../../uiElements/NotesHistory";
 import PageContainer from "../../uiElements/PageContainer";
 import RoundButton from "../../uiElements/RoundButton";
 import UserNotes from "./UserNotes";
+import Spinner from "../../uiElements/Spinner";
+import { useHttpRequest } from "../../../hooks/useHttpRequest";
 
 const UserPanel = () => {
+  const [userNotes, setUserNotes] = useState([]);
+
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const { isFormOpen, setIsFormOpen } = useContext(AuthContext);
+
+  const { userID } = useContext(AuthContext);
+  const { sendRequest, isLoading } = useHttpRequest();
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:3001/api/notes/user/${userID}`
+        );
+
+        setUserNotes(responseData.notes);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchNotes();
+  }, [sendRequest, userID]);
 
   const handleAddNote = () => {
     setIsHistoryOpen(false);
@@ -63,6 +85,12 @@ const UserPanel = () => {
 
       <AddNote isOpen={isAddNoteOpen} />
       <NotesHistory isOpen={isHistoryOpen} />
+
+      {isLoading ? (
+        <Spinner text="Loading..." />
+      ) : (
+        <UserNotes userNotes={userNotes} />
+      )}
     </PageContainer>
   );
 };

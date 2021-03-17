@@ -28,6 +28,9 @@ const AddNote = ({ isOpen }) => {
     } catch (err) {
       console.log(err);
     }
+
+    setNoteBody("");
+    setNoteTitle("");
   };
 
   const handleNoteTitle = value => {
@@ -69,7 +72,7 @@ const Form = styled.form`
   align-items: center;
 `;
 
-const FormTitle = styled.form`
+const FormTitle = styled.h3`
   margin-bottom: 5rem;
 
   font-size: 2rem;
