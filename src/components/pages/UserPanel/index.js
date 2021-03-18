@@ -64,6 +64,7 @@ const UserPanel = () => {
   return (
     <PageContainer>
       <Options>
+        <Title>Management</Title>
         <ButtonContainer>
           <RoundButton text="Add note" onClick={handleAddNote}>
             <FontAwesomeIcon icon={faPlus} />
@@ -96,12 +97,24 @@ const UserPanel = () => {
 };
 
 const Options = styled.section`
-  grid-area: 1/1/-1/3;
+  grid-area: 1/1/-1/4;
 
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+`;
+
+const Title = styled.div`
+  flex-basis: 100%;
+  height: 3rem;
+
+  font-size: 2.25rem;
+  text-align: center;
+
+  border-bottom: 2px solid ${({ theme }) => theme.colors.blue};
+
+  color: ${({ theme }) => theme.colors.gray};
 `;
 
 const ButtonContainer = styled.div`
@@ -110,7 +123,7 @@ const ButtonContainer = styled.div`
 
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
 
   padding-left: 2rem;
 `;

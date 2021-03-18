@@ -61,8 +61,10 @@ const Wrapper = styled.div`
     position: absolute;
     left: 0;
     top: 0;
+
     width: 100%;
     height: 100%;
+
     background-color: ${({ theme, dark }) =>
       dark ? "rgb(150, 150, 150)" : theme.colors.blue};
     clip-path: circle(200px at right top);
