@@ -10,7 +10,6 @@ const UserNotes = ({ userNotes }) => {
   return (
     <>
       <Wrapper>
-        {" "}
         <Title>Your notes</Title>
         {renderUserNotes()}
       </Wrapper>

@@ -79,11 +79,13 @@ Menu.propTypes = {
 const MenuTitle = styled.h1`
   margin-right: auto;
   margin-left: 1rem;
+
   text-align: left;
   color: white;
 `;
 
 const MenuBar = styled.div`
+  z-index: 9999;
   position: relative;
   grid-area: 1/1/2/-1;
 
@@ -92,6 +94,8 @@ const MenuBar = styled.div`
   justify-content: flex-end;
 
   background-color: ${({ theme }) => theme.colors.main};
+
+  padding: 0.5rem 0;
 
   &:before {
     content: "";

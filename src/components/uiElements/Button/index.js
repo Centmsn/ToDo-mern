@@ -11,7 +11,7 @@ const Button = ({ path, as, onClick, children, isActive }) => {
 
 const Btn = styled(Link)`
   position: relative;
-  margin: 0.5rem 1rem;
+  margin: 0 1rem;
 
   display: flex;
 

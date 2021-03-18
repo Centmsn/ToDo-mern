@@ -4,6 +4,7 @@ import { faHistory } from "@fortawesome/free-solid-svg-icons";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 
 import AuthContext from "../../../context/Auth";
 import AddNote from "../../uiElements/AddNote";
@@ -21,7 +22,7 @@ const UserPanel = () => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  const { userID } = useContext(AuthContext);
+  const { userID, isLoggedIn } = useContext(AuthContext);
   const { sendRequest, isLoading } = useHttpRequest();
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const UserPanel = () => {
           `http://localhost:3001/api/notes/user/${userID}`
         );
 
+        console.log(responseData.notes);
         setUserNotes(responseData.notes);
       } catch (err) {
         console.log(err);
@@ -61,6 +63,10 @@ const UserPanel = () => {
     setIsSettingsOpen(prev => !prev);
   };
 
+  if (!isLoggedIn) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <PageContainer>
       <Options>
@@ -84,7 +90,11 @@ const UserPanel = () => {
         </ButtonContainer>
       </Options>
 
-      <AddNote isOpen={isAddNoteOpen} />
+      <AddNote
+        isOpen={isAddNoteOpen}
+        setNotes={setUserNotes}
+        notes={userNotes}
+      />
       <NotesHistory isOpen={isHistoryOpen} />
 
       {isLoading ? (

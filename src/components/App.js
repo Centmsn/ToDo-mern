@@ -4,7 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import { AuthContextProvider } from "../context/Auth";
 import Theme from "../context/Theme";
 import MainContainer from "./uiElements/MainContainer";
-import Spinner from "./uiElements/Spinner";
 import Menu from "./uiElements/Menu";
 import Home from "./pages/Home";
 import UserPanel from "./pages/UserPanel";

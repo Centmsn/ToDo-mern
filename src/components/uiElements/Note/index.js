@@ -2,16 +2,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
-const Note = ({ title, body, time }) => {
+import { useHttpRequest } from "../../../hooks/useHttpRequest";
+
+const Note = ({ title, body, time, _id }) => {
   const dateString = time.split("T")[0];
   const timeString = time.match(/\d*:\d*:\d*/g);
+
+  const { sendRequest, error } = useHttpRequest();
+
+  const handleNoteRemove = async () => {
+    await sendRequest(`http://localhost:3001/api/notes/${_id}`, "DELETE");
+  };
 
   return (
     <Wrapper>
       <NoteInfo>
         <NoteTitle>{title}</NoteTitle>
         <NoteSettings>
-          <span>
+          <span onClick={handleNoteRemove}>
             <FontAwesomeIcon icon={faTrashAlt} />
           </span>
         </NoteSettings>
@@ -28,10 +36,14 @@ const Note = ({ title, body, time }) => {
 const Wrapper = styled.div`
   flex-basis: 30%;
 
+  min-height: 100px;
+  max-height: 25vh;
+
   box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.gray};
   border-radius: 5px;
 
   padding: 0.25rem;
+  overflow-y: auto;
 `;
 
 const NoteInfo = styled.div`

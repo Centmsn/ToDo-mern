@@ -8,7 +8,7 @@ import Spinner from "../Spinner";
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
 import AuthContext from "../../../context/Auth";
 
-const AddNote = ({ isOpen }) => {
+const AddNote = ({ isOpen, notes, setNotes }) => {
   const [noteTitle, setNoteTitle] = useState("");
   const [noteBody, setNoteBody] = useState("");
 
@@ -18,8 +18,9 @@ const AddNote = ({ isOpen }) => {
   const handleFormSubmit = async e => {
     e.preventDefault();
 
+    let responseData;
     try {
-      const responseData = await sendRequest(
+      responseData = await sendRequest(
         "http://localhost:3001/api/notes",
         "POST",
         JSON.stringify({ noteTitle, noteBody, userID }),
@@ -28,9 +29,17 @@ const AddNote = ({ isOpen }) => {
     } catch (err) {
       console.log(err);
     }
-
     setNoteBody("");
     setNoteTitle("");
+
+    setNotes(prev => [
+      ...prev,
+      {
+        title: responseData.note.title,
+        time: responseData.note.time,
+        body: responseData.note.body,
+      },
+    ]);
   };
 
   const handleNoteTitle = value => {
