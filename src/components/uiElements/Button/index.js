@@ -1,12 +1,53 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
-const Button = ({ path, as, onClick, children, isActive }) => {
+const Button = ({
+  path,
+  onClick,
+  children,
+  isActive = false,
+  disabled = false,
+}) => {
+  const handleOnClick = () => {
+    if (disabled) return;
+
+    onClick();
+  };
+
   return (
-    <Btn as={as} to={path} onClick={onClick}>
+    <Btn
+      to={path}
+      as={!path && "button"}
+      onClick={handleOnClick}
+      isActive={isActive}
+      disabled={disabled}
+    >
       {children}
     </Btn>
   );
+};
+
+Button.propTypes = {
+  /**
+   * adding a path will cause the component to render <a> tag instead of <button>
+   */
+  path: PropTypes.string,
+
+  /**
+   * function which will be triggred on click
+   */
+  onClick: PropTypes.func,
+
+  /**
+   * if set to true hover effect will be displayed permanently
+   */
+  isActive: PropTypes.bool,
+
+  /**
+   * if set to true component will not display hover effect, onClick function will not be triggered
+   */
+  disabled: PropTypes.bool,
 };
 
 const Btn = styled(Link)`
@@ -22,6 +63,7 @@ const Btn = styled(Link)`
   font-size: 1.5rem;
 
   background-color: white;
+  filter: grayscale(${({ disabled }) => (disabled ? "1" : "0")});
   color: gray;
 
   padding: 1rem;
@@ -54,7 +96,9 @@ const Btn = styled(Link)`
   }
 
   &:hover&:before {
-    clip-path: circle(100% at left bottom);
+    clip-path: circle(
+      ${({ disabled }) => (disabled ? "0" : "100%")} at left bottom
+    );
   }
 `;
 

@@ -12,7 +12,7 @@ const MenuListItem = ({ text, path, icon, toggleMenuVisibility }) => {
   } else {
     return (
       <li>
-        <Button as={"button"} onClick={toggleMenuVisibility}>
+        <Button onClick={toggleMenuVisibility}>
           <span>{icon}</span> <span>{text}</span>
         </Button>
       </li>
