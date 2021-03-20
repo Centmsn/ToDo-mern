@@ -41,7 +41,6 @@ const RoundBtn = styled.button`
   height: 7rem;
 
   border-radius: 50%;
-  outline: none;
   box-shadow: ${({ isActive, theme }) =>
     isActive
       ? `0 0 0 6px ${theme.colors.off},
@@ -53,7 +52,6 @@ const RoundBtn = styled.button`
   background-color: ${({ theme }) => theme.colors.blue};
   color: white;
 
-  cursor: pointer;
   transition: 300ms linear;
 
   &:after {

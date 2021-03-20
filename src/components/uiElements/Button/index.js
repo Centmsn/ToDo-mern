@@ -61,7 +61,6 @@ const Btn = styled(Link)`
   display: flex;
 
   box-shadow: inset 0 0 0px 2px ${({ theme }) => theme.colors.off};
-  outline: none;
   border-radius: 5px;
 
   font-size: 1.5rem;
@@ -72,7 +71,6 @@ const Btn = styled(Link)`
 
   padding: 1rem;
   transition: 300ms;
-  cursor: pointer;
 
   span {
     z-index: 999;

@@ -49,7 +49,7 @@ const AddNote = ({ isOpen, setIsOpen, notes, setNotes }) => {
   };
 
   return (
-    <SideBar isOpen={isOpen}>
+    <SideBar isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form>
         {isLoading && <Spinner text="Creating..." />}
         <FormTitle>Add note</FormTitle>

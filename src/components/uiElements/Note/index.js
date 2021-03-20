@@ -96,11 +96,11 @@ const Icon = styled.span`
     bottom: 0;
     left: 0;
 
-    opacity: 0;
+    visibility: hidden;
   }
 
   &:hover&:after {
-    opacity: 1;
+    visibility: visible;
   }
 
   &:hover {

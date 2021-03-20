@@ -18,6 +18,14 @@ const GlobalStyle = createGlobalStyle`
 
     button {
         border: none;
+        outline: none;
+        background: none;
+
+        cursor: pointer;
+    }
+
+    button:focus {
+        outline: none;
     }
 `;
 

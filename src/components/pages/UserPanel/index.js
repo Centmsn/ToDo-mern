@@ -83,13 +83,21 @@ const UserPanel = () => {
         </ButtonContainer>
 
         <ButtonContainer>
-          <RoundButton text="History" onClick={handleNotesHistory}>
+          <RoundButton
+            text="History"
+            onClick={handleNotesHistory}
+            isActive={isHistoryOpen}
+          >
             <FontAwesomeIcon icon={faHistory} />
           </RoundButton>
         </ButtonContainer>
 
         <ButtonContainer>
-          <RoundButton text="Settings" onClick={handleSettings}>
+          <RoundButton
+            text="Settings"
+            onClick={handleSettings}
+            isActive={isSettingsOpen}
+          >
             <FontAwesomeIcon icon={faCog} />
           </RoundButton>
         </ButtonContainer>
@@ -97,12 +105,12 @@ const UserPanel = () => {
 
       <AddNote
         isOpen={isAddNoteOpen}
-        setIsOpen={setIsAddNoteOpen}
+        setIsOpen={handleAddNote}
         setNotes={setUserNotes}
         notes={userNotes}
       />
-      <NotesHistory isOpen={isHistoryOpen} />
-      <Settings isOpen={isSettingsOpen} />
+      <NotesHistory isOpen={isHistoryOpen} setIsOpen={isHistoryOpen} />
+      <Settings isOpen={isSettingsOpen} setIsOpen={isSettingsOpen} />
 
       {isLoading ? (
         <Spinner text="Loading..." />

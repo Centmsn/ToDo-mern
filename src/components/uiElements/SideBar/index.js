@@ -1,4 +1,6 @@
 import { CSSTransition } from "react-transition-group";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -7,7 +9,7 @@ import PropTypes from "prop-types";
  * @param {Object} props - react props
  * @returns {JSX.Element}
  */
-const SideBar = ({ children, isOpen, size = "30vw" }) => {
+const SideBar = ({ children, isOpen, setIsOpen, size = "30vw" }) => {
   let timeout = size.match(/\d/g).join("") * 1;
 
   if (timeout < 100) timeout = timeout * 10;
@@ -20,7 +22,15 @@ const SideBar = ({ children, isOpen, size = "30vw" }) => {
       timeout={timeout}
       unmountOnExit
     >
-      <Wrapper size={size}>{children}</Wrapper>
+      <Bar size={size}>
+        {setIsOpen && (
+          <CloseBtn onClick={setIsOpen}>
+            <FontAwesomeIcon icon={faTimes} />
+          </CloseBtn>
+        )}
+
+        {children}
+      </Bar>
     </CSSTransition>
   );
 };
@@ -35,9 +45,14 @@ SideBar.propTypes = {
    * Sets components width, all units are accepted
    */
   size: PropTypes.string,
+
+  /**
+   * function which triggers isOpen state change. If provided component will render close button
+   */
+  setIsOpen: PropTypes.bool,
 };
 
-const Wrapper = styled.div`
+const Bar = styled.div`
   position: absolute;
   z-index: 99;
   top: calc(100vh / 12);
@@ -85,6 +100,22 @@ const Wrapper = styled.div`
 
   &.bar-exit-active {
     transform: translateX(${({ size }) => size});
+  }
+`;
+
+const CloseBtn = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  font-size: 1.5rem;
+
+  color: white;
+  transition: transform 300ms;
+
+  &:hover {
+    transform: scale(1.25);
+    color: ${({ theme }) => theme.colors.off};
   }
 `;
 
