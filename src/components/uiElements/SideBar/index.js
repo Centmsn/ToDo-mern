@@ -39,6 +39,7 @@ SideBar.propTypes = {
 
 const Wrapper = styled.div`
   position: absolute;
+  z-index: 99;
   top: calc(100vh / 12);
   right: 0;
   bottom: 0;

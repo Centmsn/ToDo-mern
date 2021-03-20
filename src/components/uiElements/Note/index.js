@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
@@ -14,14 +15,22 @@ const Note = ({ title, body, time, _id }) => {
     await sendRequest(`http://localhost:3001/api/notes/${_id}`, "DELETE");
   };
 
+  const handleNoteEdit = () => {
+    console.log("editing");
+  };
+
   return (
     <Wrapper>
       <NoteInfo>
         <NoteTitle>{title}</NoteTitle>
         <NoteSettings>
-          <span onClick={handleNoteRemove}>
+          <Icon onClick={handleNoteRemove} tooltip="Remove note">
             <FontAwesomeIcon icon={faTrashAlt} />
-          </span>
+          </Icon>
+
+          <Icon onClick={handleNoteEdit} tooltip="Edit note">
+            <FontAwesomeIcon icon={faEdit} />
+          </Icon>
         </NoteSettings>
         <NoteTime>
           <span>{dateString}</span> <span>{timeString}</span>
@@ -67,18 +76,35 @@ const NoteTime = styled.p`
 `;
 
 const NoteSettings = styled.div`
+  position: relative;
   flex-basis: 50%;
 
   display: flex;
   justify-content: flex-end;
 
-  color: ${({ theme }) => theme.colors.main};
-  span {
-    cursor: pointer;
+  color: white;
+`;
+
+const Icon = styled.span`
+  margin: 0 0.5rem;
+  cursor: pointer;
+
+  &:after {
+    content: ${({ tooltip }) => `"${tooltip}"`};
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    opacity: 0;
   }
 
-  span:hover {
-    color: white;
+  &:hover&:after {
+    opacity: 1;
+  }
+
+  &:hover {
+    color: black;
   }
 `;
 

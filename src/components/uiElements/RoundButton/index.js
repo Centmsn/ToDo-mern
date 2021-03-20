@@ -6,9 +6,14 @@ import PropTypes from "prop-types";
  * @param {Object} props - React props
  * @returns {JSX.Element}
  */
-const RoundButton = ({ children, text = "", onClick = () => {} }) => {
+const RoundButton = ({
+  children,
+  text = "",
+  onClick = () => {},
+  isActive = false,
+}) => {
   return (
-    <RoundBtn text={text} onClick={onClick}>
+    <RoundBtn text={text} onClick={onClick} isActive={isActive}>
       {children}
     </RoundBtn>
   );
@@ -24,6 +29,11 @@ RoundButton.propTypes = {
    * Function which is triggered on button click
    */
   onClick: PropTypes.func.isRequired,
+
+  /**
+   * if set to true component will keep hover effect permanently
+   */
+  isActive: PropTypes.bool,
 };
 
 const RoundBtn = styled.button`
@@ -32,7 +42,11 @@ const RoundBtn = styled.button`
 
   border-radius: 50%;
   outline: none;
-  box-shadow: 0 0 0 2px white, 0 0 0 4px ${({ theme }) => theme.colors.main};
+  box-shadow: ${({ isActive, theme }) =>
+    isActive
+      ? `0 0 0 6px ${theme.colors.off},
+      0 0 0 8px ${theme.colors.main}`
+      : `0 0 0 2px white, 0 0 0 4px ${theme.colors.main}`};
 
   font-size: 4rem;
 
@@ -49,10 +63,10 @@ const RoundBtn = styled.button`
     top: 2rem;
     right: 0;
     bottom: 0;
-    left: calc(7rem + 10px + 8px);
+    left: 2rem;
 
-    transform: translateX(-25%);
-    opacity: 0;
+    transform: translateX(${({ isActive }) => (isActive ? "0" : "-25%")});
+    opacity: ${({ isActive }) => (isActive ? "1" : "0")};
 
     font-size: 2rem;
     color: ${({ theme }) => theme.colors.gray};

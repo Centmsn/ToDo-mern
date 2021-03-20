@@ -13,6 +13,7 @@ import PageContainer from "../../uiElements/PageContainer";
 import RoundButton from "../../uiElements/RoundButton";
 import UserNotes from "./UserNotes";
 import Spinner from "../../uiElements/Spinner";
+import Settings from "../../uiElements/Settings";
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
 
 const UserPanel = () => {
@@ -72,7 +73,11 @@ const UserPanel = () => {
       <Options>
         <Title>Management</Title>
         <ButtonContainer>
-          <RoundButton text="Add note" onClick={handleAddNote}>
+          <RoundButton
+            text="Add note"
+            onClick={handleAddNote}
+            isActive={isAddNoteOpen}
+          >
             <FontAwesomeIcon icon={faPlus} />
           </RoundButton>
         </ButtonContainer>
@@ -97,6 +102,7 @@ const UserPanel = () => {
         notes={userNotes}
       />
       <NotesHistory isOpen={isHistoryOpen} />
+      <Settings isOpen={isSettingsOpen} />
 
       {isLoading ? (
         <Spinner text="Loading..." />
