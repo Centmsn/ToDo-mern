@@ -92,6 +92,7 @@ const UserPanel = () => {
 
       <AddNote
         isOpen={isAddNoteOpen}
+        setIsOpen={setIsAddNoteOpen}
         setNotes={setUserNotes}
         notes={userNotes}
       />

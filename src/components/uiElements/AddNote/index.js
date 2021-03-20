@@ -8,16 +8,15 @@ import Spinner from "../Spinner";
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
 import AuthContext from "../../../context/Auth";
 
-const AddNote = ({ isOpen, notes, setNotes }) => {
+const AddNote = ({ isOpen, setIsOpen, notes, setNotes }) => {
   const [noteTitle, setNoteTitle] = useState("");
   const [noteBody, setNoteBody] = useState("");
+  const [creatingError, setCreatingError] = useState(null);
 
   const { userID } = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpRequest();
 
-  const handleFormSubmit = async e => {
-    e.preventDefault();
-
+  const handleFormSubmit = async () => {
     let responseData;
     try {
       responseData = await sendRequest(
@@ -26,8 +25,11 @@ const AddNote = ({ isOpen, notes, setNotes }) => {
         JSON.stringify({ noteTitle, noteBody, userID }),
         { "Content-Type": "application/json" }
       );
+
+      setIsOpen(false);
     } catch (err) {
-      console.log(err);
+      setCreatingError(err.message);
+      return;
     }
     setNoteBody("");
     setNoteTitle("");
@@ -66,9 +68,11 @@ const AddNote = ({ isOpen, notes, setNotes }) => {
           value={noteBody}
         />
 
-        <Button onClick={handleFormSubmit}>
+        <Button onClick={handleFormSubmit} disabled={!noteBody || !noteTitle}>
           <span>Create</span>
         </Button>
+
+        {creatingError && <ErrorMessage>{creatingError}</ErrorMessage>}
       </Form>
     </SideBar>
   );
@@ -87,6 +91,24 @@ const FormTitle = styled.h3`
   font-size: 2rem;
 
   color: white;
+`;
+
+const ErrorMessage = styled.div`
+  position: absolute;
+
+  right: 12.5%;
+  bottom: 10%;
+  left: 12.5%;
+
+  box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.red};
+  border-radius: 5px;
+
+  text-align: center;
+
+  background-color: white;
+  color: ${({ theme }) => theme.colors.red};
+
+  padding: 0.25rem;
 `;
 
 export default AddNote;

@@ -32,9 +32,7 @@ const LoginForm = () => {
     setIsInSignUpMode(prev => !prev);
   };
 
-  const handleFormSubmit = async e => {
-    e.preventDefault();
-
+  const handleFormSubmit = async () => {
     try {
       const responseData = await sendRequest(
         `http://localhost:3001/api/users/${
@@ -75,7 +73,7 @@ const LoginForm = () => {
 
       {isLoading && <Spinner text="Please wait" />}
 
-      <Form onSubmit={handleFormSubmit}>
+      <Form>
         {error && <FormError>{error}</FormError>}
         {isInSignUpMode && (
           <Input type="text" desc="Name" onChange={setName} value={name} />
@@ -90,7 +88,7 @@ const LoginForm = () => {
           value={password}
         />
 
-        <Button as="button" onClick={() => {}}>
+        <Button as="button" onClick={handleFormSubmit}>
           <span>Submit</span>
           <span>
             <FontAwesomeIcon icon={faPaperPlane} />

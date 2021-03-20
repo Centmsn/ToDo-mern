@@ -34,6 +34,7 @@ const Note = ({ title, body, time, _id }) => {
 };
 
 const Wrapper = styled.div`
+  margin: 1rem 0;
   flex-basis: 30%;
 
   min-height: 100px;

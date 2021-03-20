@@ -24,6 +24,8 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: flex-start;
+
+  overflow-y: auto;
 `;
 
 const Title = styled.div`

@@ -9,10 +9,14 @@ const Button = ({
   isActive = false,
   disabled = false,
 }) => {
-  const handleOnClick = () => {
-    if (disabled) return;
+  const handleOnClick = e => {
+    if (!path) {
+      e.preventDefault();
+    }
 
-    onClick();
+    if (!disabled) {
+      if (typeof onClick === "function") onClick();
+    }
   };
 
   return (
