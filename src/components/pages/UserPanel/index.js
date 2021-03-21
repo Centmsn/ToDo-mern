@@ -33,9 +33,9 @@ const UserPanel = () => {
           `http://localhost:3001/api/notes/user/${userID}`
         );
 
-        console.log(responseData.notes);
         setUserNotes(responseData.notes);
       } catch (err) {
+        // TODO: add error handling
         console.log(err);
       }
     };
@@ -109,13 +109,13 @@ const UserPanel = () => {
         setNotes={setUserNotes}
         notes={userNotes}
       />
-      <NotesHistory isOpen={isHistoryOpen} setIsOpen={isHistoryOpen} />
-      <Settings isOpen={isSettingsOpen} setIsOpen={isSettingsOpen} />
+      <NotesHistory isOpen={isHistoryOpen} setIsOpen={handleNotesHistory} />
+      <Settings isOpen={isSettingsOpen} setIsOpen={handleSettings} />
 
       {isLoading ? (
         <Spinner text="Loading..." />
       ) : (
-        <UserNotes userNotes={userNotes} />
+        <UserNotes userNotes={userNotes} setNotes={setUserNotes} />
       )}
     </PageContainer>
   );

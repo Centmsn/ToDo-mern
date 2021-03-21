@@ -5,14 +5,29 @@ import styled from "styled-components";
 
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
 
-const Note = ({ title, body, time, _id }) => {
-  const dateString = time.split("T")[0];
-  const timeString = time.match(/\d*:\d*:\d*/g);
-
+const Note = ({ title, body, createdAt, _id, removeNote }) => {
+  console.log(createdAt);
+  const dateString = createdAt.split("T")[0];
+  const timeString = createdAt.match(/\d*:\d*:\d*/g);
   const { sendRequest, error } = useHttpRequest();
 
   const handleNoteRemove = async () => {
-    await sendRequest(`http://localhost:3001/api/notes/${_id}`, "DELETE");
+    try {
+      const response = await sendRequest(
+        `http://localhost:3001/api/notes/${_id}`,
+        "DELETE"
+      );
+
+      // !refactor
+      if (!response) {
+        return;
+      }
+    } catch (err) {
+      // TODO: add error handling
+      console.log(err);
+    }
+
+    removeNote(_id);
   };
 
   const handleNoteEdit = () => {

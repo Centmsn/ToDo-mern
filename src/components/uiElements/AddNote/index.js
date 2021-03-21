@@ -38,8 +38,9 @@ const AddNote = ({ isOpen, setIsOpen, notes, setNotes }) => {
       ...prev,
       {
         title: responseData.note.title,
-        time: responseData.note.time,
+        createdAt: responseData.note.createdAt,
         body: responseData.note.body,
+        _id: responseData.note._id,
       },
     ]);
   };

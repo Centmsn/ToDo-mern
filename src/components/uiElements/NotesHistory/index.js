@@ -9,9 +9,9 @@ const DUMMY_HISTORY_NOTES = {
   completed: "24-03-2019",
 };
 
-const NotesHistory = ({ isOpen }) => {
+const NotesHistory = ({ isOpen, setIsOpen }) => {
   return (
-    <SideBar size={"50vw"} isOpen={isOpen}>
+    <SideBar size={"50vw"} isOpen={isOpen} setIsOpen={setIsOpen}>
       <Title>Removed notes</Title>
 
       <NotesWrapper>
