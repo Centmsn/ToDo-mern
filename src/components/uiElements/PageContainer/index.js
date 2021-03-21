@@ -11,6 +11,8 @@ const Wrapper = styled.div`
 
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(12, 1fr);
+
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export default PageContainer;

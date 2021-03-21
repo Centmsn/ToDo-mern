@@ -57,7 +57,7 @@ const RoundBtn = styled.button`
   &:after {
     content: "${({ text }) => text}";
     position: absolute;
-    z-index: -1;
+
     top: 2rem;
     right: 0;
     bottom: 0;
@@ -65,28 +65,24 @@ const RoundBtn = styled.button`
 
     transform: translateX(${({ isActive }) => (isActive ? "0" : "-25%")});
     opacity: ${({ isActive }) => (isActive ? "1" : "0")};
+    visibility: ${({ isActive }) => (isActive ? "visible" : "hidden")};
 
     font-size: 2rem;
     color: ${({ theme }) => theme.colors.gray};
-    transition: 300ms;
+    transition: all 300ms;
+    transition-property: opacity, transform, visibility;
   }
 
   &:focus,
   &:hover {
     box-shadow: 0 0 0 6px ${({ theme }) => theme.colors.off},
       0 0 0 8px ${({ theme }) => theme.colors.main};
-  }
 
-  &:focus {
     &:after {
-      opacity: 1;
       transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
     }
-  }
-
-  &:hover&:after {
-    opacity: 1;
-    transform: translateX(0);
   }
 `;
 
