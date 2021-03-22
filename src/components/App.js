@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import { AuthContextProvider } from "../context/Auth";
 import { SettingsContextProvider } from "../context/Settings";
 import Theme from "../context/Theme";
+import Error from "./pages/Error";
 import MainContainer from "./uiElements/MainContainer";
 import Menu from "./uiElements/Menu";
 import Home from "./pages/Home";
@@ -22,6 +23,7 @@ const App = () => {
 
               <Switch>
                 <Route path="/" component={Home} exact />
+                <Route path="/error" component={Error} exact />
                 <Route path="/:id" component={UserPanel} />
               </Switch>
             </MainContainer>

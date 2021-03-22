@@ -8,7 +8,7 @@ import Button from "../Button";
 import Input from "../Input";
 import Spinner from "../Spinner";
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
-import { useSessionStorage } from "../../../hooks/useSessionStorage";
+import { setSessionItem } from "../../../utils/handleSessionStorage";
 
 const LoginForm = () => {
   const [isInSignUpMode, setIsInSignUpMode] = useState(false);
@@ -17,7 +17,6 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const { error, isLoading, sendRequest, clearError } = useHttpRequest();
-  const { setSessionItem } = useSessionStorage();
   const { setIsLoggedIn, setUserID } = useContext(AuthContext);
 
   useEffect(() => {
@@ -51,7 +50,6 @@ const LoginForm = () => {
         }
       );
 
-      console.log(responseData);
       if (
         responseData?.statusCode === 201 ||
         (!isInSignUpMode && responseData?.statusCode === 200)

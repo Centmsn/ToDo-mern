@@ -7,6 +7,7 @@ import SideBar from "../SideBar";
 import Spinner from "../Spinner";
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
 import AuthContext from "../../../context/Auth";
+import { getSessionItem } from "../../../utils/handleSessionStorage";
 
 const AddNote = ({ isOpen, setIsOpen, notes, setNotes }) => {
   const [noteTitle, setNoteTitle] = useState("");
@@ -14,17 +15,25 @@ const AddNote = ({ isOpen, setIsOpen, notes, setNotes }) => {
   const [creatingError, setCreatingError] = useState(null);
 
   const { userID } = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpRequest();
+  const { error, isLoading, sendRequest } = useHttpRequest();
 
   const handleFormSubmit = async () => {
+    const token = getSessionItem("token");
     let responseData;
     try {
       responseData = await sendRequest(
         "http://localhost:3001/api/notes",
         "POST",
         JSON.stringify({ noteTitle, noteBody, userID }),
-        { "Content-Type": "application/json" }
+        { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
       );
+
+      //! refactor
+      if (!responseData) {
+        console.log(responseData);
+        console.log(error);
+        return;
+      }
 
       setIsOpen(false);
     } catch (err) {

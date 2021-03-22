@@ -4,6 +4,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
+import { getSessionItem } from "../../../utils/handleSessionStorage";
 
 const Note = ({ title, body, createdAt, _id, removeNote }) => {
   console.log(createdAt);
@@ -11,20 +12,19 @@ const Note = ({ title, body, createdAt, _id, removeNote }) => {
   const timeString = createdAt.match(/\d*:\d*:\d*/g);
   const { sendRequest, error } = useHttpRequest();
 
+  // TODO add error handling
   const handleNoteRemove = async () => {
     try {
-      const response = await sendRequest(
+      const token = getSessionItem("token");
+      await sendRequest(
         `http://localhost:3001/api/notes/${_id}`,
-        "DELETE"
+        "DELETE",
+        null,
+        { Authorization: `Bearer ${token}` }
       );
-
-      // !refactor
-      if (!response) {
-        return;
-      }
     } catch (err) {
-      // TODO: add error handling
       console.log(err);
+      return;
     }
     // TODO: refactor to optimistic remove
     removeNote(_id);

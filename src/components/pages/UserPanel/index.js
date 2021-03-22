@@ -15,6 +15,7 @@ import UserNotes from "./UserNotes";
 import Spinner from "../../uiElements/Spinner";
 import Settings from "../../uiElements/Settings";
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
+import { getSessionItem } from "../../../utils/handleSessionStorage";
 
 const UserPanel = () => {
   const [userNotes, setUserNotes] = useState([]);
@@ -24,18 +25,25 @@ const UserPanel = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const { userID, isLoggedIn } = useContext(AuthContext);
-  const { sendRequest, isLoading } = useHttpRequest();
+  const { error, sendRequest, isLoading } = useHttpRequest();
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
+        const token = getSessionItem("token");
+
         const responseData = await sendRequest(
-          `http://localhost:3001/api/notes/user/${userID}`
+          `http://localhost:3001/api/notes/user/${userID}`,
+          "GET",
+          null,
+          { Authorization: "Bearer " + token }
         );
 
+        if (!responseData) {
+          return setUserNotes([]);
+        }
         setUserNotes(responseData.notes);
       } catch (err) {
-        // TODO: add error handling
         console.log(err);
       }
     };
@@ -66,6 +74,10 @@ const UserPanel = () => {
 
   if (!isLoggedIn) {
     return <Redirect to="/" />;
+  }
+
+  if (error) {
+    return <Redirect to={{ pathname: "/error", state: { code: 401 } }} />;
   }
 
   return (
