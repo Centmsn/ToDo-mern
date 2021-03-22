@@ -26,7 +26,7 @@ const Note = ({ title, body, createdAt, _id, removeNote }) => {
       // TODO: add error handling
       console.log(err);
     }
-
+    // TODO: refactor to optimistic remove
     removeNote(_id);
   };
 
