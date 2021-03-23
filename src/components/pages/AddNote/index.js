@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 
-import Button from "../Button";
-import Input from "../Input";
-import SideBar from "../SideBar";
-import Spinner from "../Spinner";
+import Button from "../../uiElements/Button";
+import Input from "../../uiElements/Input";
+import SideBar from "../../uiElements/SideBar";
+import Spinner from "../../uiElements/Spinner";
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
 import AuthContext from "../../../context/Auth";
 import { getSessionItem } from "../../../utils/handleSessionStorage";

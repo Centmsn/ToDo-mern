@@ -7,13 +7,13 @@ import { useState, useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import AuthContext from "../../../context/Auth";
-import AddNote from "../../uiElements/AddNote";
-import NotesHistory from "../../uiElements/NotesHistory";
+import AddNote from "../AddNote";
+import NotesHistory from "../History";
 import PageContainer from "../../uiElements/PageContainer";
 import RoundButton from "../../uiElements/RoundButton";
 import UserNotes from "./UserNotes";
 import Spinner from "../../uiElements/Spinner";
-import Settings from "../../uiElements/Settings";
+import Settings from "../Settings";
 import { useHttpRequest } from "../../../hooks/useHttpRequest";
 import { getSessionItem } from "../../../utils/handleSessionStorage";
 
@@ -36,7 +36,7 @@ const UserPanel = () => {
           `http://localhost:3001/api/notes/user/${userID}`,
           "GET",
           null,
-          { Authorization: "Bearer " + token }
+          { Authorization: `Bearer ${token}` }
         );
 
         if (!responseData) {

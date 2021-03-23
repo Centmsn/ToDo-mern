@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Note from "../../uiElements/Note";
 
 const UserNotes = ({ userNotes, setNotes }) => {
-  console.log(userNotes);
   const handleNoteRemove = id => {
     setNotes(prev => prev.filter(el => el._id !== id));
   };

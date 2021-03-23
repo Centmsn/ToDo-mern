@@ -7,7 +7,6 @@ import { useHttpRequest } from "../../../hooks/useHttpRequest";
 import { getSessionItem } from "../../../utils/handleSessionStorage";
 
 const Note = ({ title, body, createdAt, _id, removeNote }) => {
-  console.log(createdAt);
   const dateString = createdAt.split("T")[0];
   const timeString = createdAt.match(/\d*:\d*:\d*/g);
   const { sendRequest, error } = useHttpRequest();
