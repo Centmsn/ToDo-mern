@@ -33,7 +33,7 @@ const UserPanel = () => {
         const token = getSessionItem("token");
 
         const responseData = await sendRequest(
-          `http://localhost:3001/api/notes/user/${userID}`,
+          `${process.env.REACT_APP_BASE_URL}/notes/user/${userID}`,
           "GET",
           null,
           { Authorization: `Bearer ${token}` }

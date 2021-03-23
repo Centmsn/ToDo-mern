@@ -18,7 +18,7 @@ const NotesHistory = ({ isOpen, setIsOpen }) => {
     const fetchHistory = async () => {
       const token = getSessionItem("token");
       const responseData = await sendRequest(
-        `http://localhost:3001/api/notes/history/user/${userID}`,
+        `${process.env.REACT_APP_BASE_URL}/notes/history/user/${userID}`,
         "GET",
         null,
         { Authorization: `Bearer ${token}` }

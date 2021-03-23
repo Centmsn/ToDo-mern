@@ -22,13 +22,14 @@ const AddNote = ({ isOpen, setIsOpen, notes, setNotes }) => {
     let responseData;
     try {
       responseData = await sendRequest(
-        "http://localhost:3001/api/notes",
+        `${process.env.REACT_APP_BASE_URL}/notes`,
         "POST",
         JSON.stringify({ noteTitle, noteBody, userID }),
         { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
       );
 
       //! refactor
+      //! add error handling
       if (!responseData) {
         console.log(responseData);
         console.log(error);
