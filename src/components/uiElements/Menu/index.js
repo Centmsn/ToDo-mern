@@ -26,9 +26,9 @@ const Menu = ({ title }) => {
   const menuLinks = [
     {
       text: "Dashboard",
-      path: "/TESTOWEID",
+      path: "/userPanel",
       icon: <FontAwesomeIcon icon={faClipboard} />,
-      isActive: path === "/TESTOWEID",
+      isActive: path === "/userPanel",
     },
     {
       text: "Home",

@@ -24,7 +24,7 @@ const App = () => {
               <Switch>
                 <Route path="/" component={Home} exact />
                 <Route path="/error" component={Error} exact />
-                <Route path="/:id" component={UserPanel} />
+                <Route path="/userPanel" component={UserPanel} />
               </Switch>
             </MainContainer>
           </AuthContextProvider>
