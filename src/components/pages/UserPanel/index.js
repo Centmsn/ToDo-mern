@@ -6,16 +6,16 @@ import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
-import AuthContext from "../../../context/Auth";
-import AddNote from "../AddNote";
-import NotesHistory from "../History";
-import PageContainer from "../../uiElements/PageContainer";
-import RoundButton from "../../uiElements/RoundButton";
+import AuthContext from "context/Auth";
+import AddNote from "components/pages/AddNote";
+import NotesHistory from "components/pages/History";
+import PageContainer from "components/uiElements/PageContainer";
+import RoundButton from "components/uiElements/RoundButton";
 import UserNotes from "./UserNotes";
-import Spinner from "../../uiElements/Spinner";
-import Settings from "../Settings";
-import { useHttpRequest } from "../../../hooks/useHttpRequest";
-import { getSessionItem } from "../../../utils/handleSessionStorage";
+import Spinner from "components/uiElements/Spinner";
+import Settings from "components/pages/Settings";
+import { useHttpRequest } from "hooks/useHttpRequest";
+import { getSessionItem } from "utils/handleSessionStorage";
 
 const UserPanel = () => {
   const [userNotes, setUserNotes] = useState([]);

@@ -4,8 +4,8 @@ import { faPenFancy } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faHistory } from "@fortawesome/free-solid-svg-icons";
 
-import PageContainer from "../../uiElements/PageContainer";
-import Footer from "../../uiElements/Footer";
+import PageContainer from "components/uiElements/PageContainer";
+import Footer from "components/uiElements/Footer";
 
 const Home = () => {
   return (

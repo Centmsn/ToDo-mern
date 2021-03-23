@@ -3,12 +3,12 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
 
-import AuthContext from "../../../context/Auth";
-import Button from "../Button";
-import Input from "../Input";
-import Spinner from "../Spinner";
-import { useHttpRequest } from "../../../hooks/useHttpRequest";
-import { setSessionItem } from "../../../utils/handleSessionStorage";
+import AuthContext from "context/Auth";
+import Button from "components/uiElements/Button";
+import Input from "components/uiElements/Input";
+import Spinner from "components/uiElements/Spinner";
+import { useHttpRequest } from "hooks/useHttpRequest";
+import { setSessionItem } from "utils/handleSessionStorage";
 
 const LoginForm = () => {
   const [isInSignUpMode, setIsInSignUpMode] = useState(false);

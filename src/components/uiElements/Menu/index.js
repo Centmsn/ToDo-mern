@@ -7,10 +7,10 @@ import styled from "styled-components";
 import { useContext, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-import AuthContext from "../../../context/Auth";
+import AuthContext from "context/Auth";
 import MenuList from "./MenuList";
-import LoginForm from "../LoginForm";
-import SideBar from "../SideBar";
+import LoginForm from "components/uiElements/LoginForm";
+import SideBar from "components/uiElements/SideBar";
 
 /**
  * Renders navigation bar

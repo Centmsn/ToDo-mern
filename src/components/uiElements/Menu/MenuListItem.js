@@ -1,4 +1,4 @@
-import Button from "../Button";
+import Button from "components/uiElements/Button";
 
 const MenuListItem = ({ text, path, icon, toggleMenuVisibility }) => {
   if (path) {

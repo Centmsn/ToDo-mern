@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 
-import Button from "../../uiElements/Button";
-import Input from "../../uiElements/Input";
-import SideBar from "../../uiElements/SideBar";
-import Spinner from "../../uiElements/Spinner";
-import { useHttpRequest } from "../../../hooks/useHttpRequest";
-import AuthContext from "../../../context/Auth";
-import { getSessionItem } from "../../../utils/handleSessionStorage";
+import Button from "components/uiElements/Button";
+import Input from "components/uiElements/Input";
+import SideBar from "components/uiElements/SideBar";
+import Spinner from "components/uiElements/Spinner";
+import { useHttpRequest } from "hooks/useHttpRequest";
+import AuthContext from "context/Auth";
+import { getSessionItem } from "utils/handleSessionStorage";
 
 const AddNote = ({ isOpen, setIsOpen, notes, setNotes }) => {
   const [noteTitle, setNoteTitle] = useState("");

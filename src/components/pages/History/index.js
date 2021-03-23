@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-import AuthContext from "../../../context/Auth";
+import AuthContext from "context/Auth";
 import HistoryItem from "./HistoryItem";
-import SideBar from "../../uiElements/SideBar";
-import Spinner from "../../uiElements/Spinner";
-import { useHttpRequest } from "../../../hooks/useHttpRequest";
+import SideBar from "components/uiElements/SideBar";
+import Spinner from "components/uiElements/Spinner";
+import { useHttpRequest } from "hooks/useHttpRequest";
 import { useEffect, useContext, useState } from "react";
-import { getSessionItem } from "../../../utils/handleSessionStorage";
+import { getSessionItem } from "utils/handleSessionStorage";
 
 const NotesHistory = ({ isOpen, setIsOpen }) => {
   const [historyNotes, setHistoryNotes] = useState([]);
@@ -69,6 +69,8 @@ const NotesWrapper = styled.div`
   height: 90%;
 
   overflow-y: auto;
+
+  padding: 1rem;
 `;
 
 export default NotesHistory;

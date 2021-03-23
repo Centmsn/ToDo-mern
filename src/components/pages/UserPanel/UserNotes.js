@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import Note from "../../uiElements/Note";
+import Note from "components/uiElements/Note";
 
 const UserNotes = ({ userNotes, setNotes }) => {
   const handleNoteRemove = id => {

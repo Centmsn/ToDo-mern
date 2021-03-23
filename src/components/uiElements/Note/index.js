@@ -3,8 +3,8 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
-import { useHttpRequest } from "../../../hooks/useHttpRequest";
-import { getSessionItem } from "../../../utils/handleSessionStorage";
+import { useHttpRequest } from "hooks/useHttpRequest";
+import { getSessionItem } from "utils/handleSessionStorage";
 
 const Note = ({ title, body, createdAt, _id, removeNote }) => {
   const dateString = createdAt.split("T")[0];
