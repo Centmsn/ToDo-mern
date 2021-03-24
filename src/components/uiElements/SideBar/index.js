@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { useEffect, useRef } from "react";
 
 /**
  * Functional react component - renders side bar on the screen
@@ -10,28 +11,46 @@ import PropTypes from "prop-types";
  * @returns {JSX.Element}
  */
 const SideBar = ({ children, isOpen, setIsOpen, size = "30vw" }) => {
+  const backdropRef = useRef(null);
+
+  useEffect(() => {
+    const backdrop = backdropRef.current;
+    const handleBackdropClick = () => {
+      setIsOpen();
+    };
+
+    backdrop.addEventListener("click", handleBackdropClick);
+
+    return () => {
+      backdrop.removeEventListener("click", handleBackdropClick);
+    };
+  }, [setIsOpen]);
+
   let timeout = size.match(/\d/g).join("") * 1;
 
   if (timeout < 100) timeout = timeout * 10;
   else if (timeout > 1000) timeout = 1000;
 
   return (
-    <CSSTransition
-      in={isOpen}
-      classNames={"bar"}
-      timeout={timeout}
-      unmountOnExit
-    >
-      <Bar size={size}>
-        {setIsOpen && (
-          <CloseBtn onClick={setIsOpen}>
-            <FontAwesomeIcon icon={faTimes} />
-          </CloseBtn>
-        )}
+    <>
+      <Backdrop ref={backdropRef} isOpen={isOpen}></Backdrop>
+      <CSSTransition
+        in={isOpen}
+        classNames={"bar"}
+        timeout={timeout}
+        unmountOnExit
+      >
+        <Bar size={size}>
+          {setIsOpen && (
+            <CloseBtn onClick={setIsOpen}>
+              <FontAwesomeIcon icon={faTimes} />
+            </CloseBtn>
+          )}
 
-        {children}
-      </Bar>
-    </CSSTransition>
+          {children}
+        </Bar>
+      </CSSTransition>
+    </>
   );
 };
 
@@ -47,9 +66,9 @@ SideBar.propTypes = {
   size: PropTypes.string,
 
   /**
-   * function which triggers isOpen state change. If provided component will render close button
+   * function which triggers isOpen state change
    */
-  setIsOpen: PropTypes.bool,
+  setIsOpen: PropTypes.func.isRequired,
 };
 
 const Bar = styled.div`
@@ -117,6 +136,15 @@ const CloseBtn = styled.button`
     transform: scale(1.25);
     color: ${({ theme }) => theme.colors.off};
   }
+`;
+
+const Backdrop = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
 `;
 
 export default SideBar;

@@ -3,34 +3,22 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
-import { useHttpRequest } from "hooks/useHttpRequest";
-import { getSessionItem } from "utils/handleSessionStorage";
-
-const Note = ({ title, body, createdAt, _id, removeNote }) => {
+const Note = ({ title, body, createdAt, _id, onNoteEdit, onNoteRemove }) => {
   const dateString = createdAt.split("T")[0];
   const timeString = createdAt.match(/\d*:\d*:\d*/g);
-  const { sendRequest, error } = useHttpRequest();
 
-  // TODO add error handling
-  const handleNoteRemove = async () => {
-    try {
-      const token = getSessionItem("token");
-      await sendRequest(
-        `http://localhost:3001/api/notes/${_id}`,
-        "DELETE",
-        null,
-        { Authorization: `Bearer ${token}` }
-      );
-    } catch (err) {
-      console.log(err);
-      return;
-    }
-    // TODO: refactor to optimistic remove
-    removeNote(_id);
+  const handleNoteRemove = () => {
+    onNoteRemove(_id);
   };
 
   const handleNoteEdit = () => {
-    console.log("editing");
+    const noteData = {
+      title,
+      body,
+      _id,
+    };
+
+    onNoteEdit(noteData);
   };
 
   return (

@@ -46,7 +46,7 @@ const Menu = ({ title }) => {
       if (typeof direction === "boolean") {
         setIsFormOpen(direction);
       } else {
-        setIsFormOpen(!isFormOpen);
+        setIsFormOpen(prev => !prev);
       }
     } else {
       history.push("/");
@@ -64,7 +64,7 @@ const Menu = ({ title }) => {
       </MenuBar>
 
       {!isLoggedIn && (
-        <SideBar isOpen={isFormOpen}>
+        <SideBar isOpen={isFormOpen} setIsOpen={() => setIsFormOpen(false)}>
           <LoginForm />
         </SideBar>
       )}

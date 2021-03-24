@@ -18,7 +18,12 @@ import { useHttpRequest } from "hooks/useHttpRequest";
 import { getSessionItem } from "utils/handleSessionStorage";
 
 const UserPanel = () => {
+  // TODO refactor to reducer?
   const [userNotes, setUserNotes] = useState([]);
+  const [noteTitle, setNoteTitle] = useState("");
+  const [noteBody, setNoteBody] = useState("");
+  const [createMode, setCreateMode] = useState(true);
+  const [editedNoteId, setEditedNoteId] = useState(null);
 
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
@@ -51,7 +56,87 @@ const UserPanel = () => {
     fetchNotes();
   }, [sendRequest, userID]);
 
+  const handleNoteAdd = async () => {
+    const url = createMode ? "/notes" : `/notes/${editedNoteId}`;
+    const method = createMode ? "POST" : "PATCH";
+    const body = createMode
+      ? { noteTitle, noteBody, userID }
+      : { body: noteBody, title: noteTitle };
+    const token = getSessionItem("token");
+    let responseData;
+    try {
+      responseData = await sendRequest(
+        `${process.env.REACT_APP_BASE_URL}${url}`,
+        method,
+        JSON.stringify(body),
+        { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
+      );
+
+      //! refactor
+      //! add error handling
+      if (!responseData) {
+        console.log(responseData);
+        console.log(error);
+        return;
+      }
+
+      setIsAddNoteOpen(false);
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+
+    if (createMode) {
+      return setUserNotes(prev => [
+        ...prev,
+        {
+          title: responseData.note.title,
+          createdAt: responseData.note.createdAt,
+          body: responseData.note.body,
+          _id: responseData.note._id,
+        },
+      ]);
+    }
+    const newNotes = [...userNotes].map(note => {
+      if (note._id === editedNoteId) {
+        note.title = noteTitle;
+        note.body = noteBody;
+      }
+
+      return note;
+    });
+    setUserNotes(newNotes);
+  };
+
+  const handleNoteEdit = ({ title, body, _id }) => {
+    setCreateMode(false);
+    setNoteTitle(title);
+    setNoteBody(body);
+    setEditedNoteId(_id);
+    setIsAddNoteOpen(true);
+  };
+
+  const handleNoteRemove = async id => {
+    try {
+      const token = getSessionItem("token");
+      await sendRequest(
+        `http://localhost:3001/api/notes/${id}`,
+        "DELETE",
+        null,
+        { Authorization: `Bearer ${token}` }
+      );
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+    // TODO: refactor to optimistic remove
+    setUserNotes(prev => prev.filter(el => el._id !== id));
+  };
+
   const handleAddNote = () => {
+    setNoteBody("");
+    setNoteTitle("");
+    setCreateMode(true);
     setIsHistoryOpen(false);
     setIsSettingsOpen(false);
 
@@ -86,7 +171,7 @@ const UserPanel = () => {
         <Title>Management</Title>
         <ButtonContainer>
           <RoundButton
-            text="Add note"
+            text={createMode ? "Add note" : "Update note"}
             onClick={handleAddNote}
             isActive={isAddNoteOpen}
           >
@@ -117,9 +202,12 @@ const UserPanel = () => {
 
       <AddNote
         isOpen={isAddNoteOpen}
+        createMode={createMode}
         setIsOpen={handleAddNote}
-        setNotes={setUserNotes}
-        notes={userNotes}
+        onFormSubmit={handleNoteAdd}
+        onBodyChange={setNoteBody}
+        onTitleChange={setNoteTitle}
+        value={{ body: noteBody, title: noteTitle }}
       />
       <NotesHistory isOpen={isHistoryOpen} setIsOpen={handleNotesHistory} />
       <Settings isOpen={isSettingsOpen} setIsOpen={handleSettings} />
@@ -127,7 +215,12 @@ const UserPanel = () => {
       {isLoading ? (
         <Spinner text="Loading..." />
       ) : (
-        <UserNotes userNotes={userNotes} setNotes={setUserNotes} />
+        <UserNotes
+          userNotes={userNotes}
+          setNotes={setUserNotes}
+          onNoteEdit={handleNoteEdit}
+          onNoteRemove={handleNoteRemove}
+        />
       )}
     </PageContainer>
   );

@@ -1,89 +1,41 @@
 import styled from "styled-components";
-import { useState, useContext } from "react";
 
 import Button from "components/uiElements/Button";
 import Input from "components/uiElements/Input";
 import SideBar from "components/uiElements/SideBar";
-import Spinner from "components/uiElements/Spinner";
-import { useHttpRequest } from "hooks/useHttpRequest";
-import AuthContext from "context/Auth";
-import { getSessionItem } from "utils/handleSessionStorage";
 
-const AddNote = ({ isOpen, setIsOpen, notes, setNotes }) => {
-  const [noteTitle, setNoteTitle] = useState("");
-  const [noteBody, setNoteBody] = useState("");
-  const [creatingError, setCreatingError] = useState(null);
-
-  const { userID } = useContext(AuthContext);
-  const { error, isLoading, sendRequest } = useHttpRequest();
-
-  const handleFormSubmit = async () => {
-    const token = getSessionItem("token");
-    let responseData;
-    try {
-      responseData = await sendRequest(
-        `${process.env.REACT_APP_BASE_URL}/notes`,
-        "POST",
-        JSON.stringify({ noteTitle, noteBody, userID }),
-        { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
-      );
-
-      //! refactor
-      //! add error handling
-      if (!responseData) {
-        console.log(responseData);
-        console.log(error);
-        return;
-      }
-
-      setIsOpen(false);
-    } catch (err) {
-      setCreatingError(err.message);
-      return;
-    }
-    setNoteBody("");
-    setNoteTitle("");
-
-    setNotes(prev => [
-      ...prev,
-      {
-        title: responseData.note.title,
-        createdAt: responseData.note.createdAt,
-        body: responseData.note.body,
-        _id: responseData.note._id,
-      },
-    ]);
-  };
-
-  const handleNoteTitle = value => {
-    setNoteTitle(value);
-  };
-
+const AddNote = ({
+  createMode,
+  isOpen,
+  setIsOpen,
+  onBodyChange,
+  onTitleChange,
+  onFormSubmit,
+  value = { body: "", title: "" },
+}) => {
+  const titleContent = createMode ? "Add note" : "Edit note";
   return (
     <SideBar isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form>
-        {isLoading && <Spinner text="Creating..." />}
-        <FormTitle>Add note</FormTitle>
+        <FormTitle>{titleContent}</FormTitle>
         <Input
           type="text"
           desc="Title"
-          onChange={handleNoteTitle}
+          onChange={onTitleChange}
           size="medium"
-          value={noteTitle}
+          value={value.title}
         />
         <Input
           type="textarea"
           desc="Description"
-          onChange={setNoteBody}
+          onChange={onBodyChange}
           size="medium"
-          value={noteBody}
+          value={value.body}
         />
 
-        <Button onClick={handleFormSubmit} disabled={!noteBody || !noteTitle}>
-          <span>Create</span>
+        <Button onClick={onFormSubmit} disabled={!value.body || !value.title}>
+          <span>{createMode ? "Create " : "Update "}note</span>
         </Button>
-
-        {creatingError && <ErrorMessage>{creatingError}</ErrorMessage>}
       </Form>
     </SideBar>
   );
@@ -102,24 +54,6 @@ const FormTitle = styled.h3`
   font-size: 2rem;
 
   color: white;
-`;
-
-const ErrorMessage = styled.div`
-  position: absolute;
-
-  right: 12.5%;
-  bottom: 10%;
-  left: 12.5%;
-
-  box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.red};
-  border-radius: 5px;
-
-  text-align: center;
-
-  background-color: white;
-  color: ${({ theme }) => theme.colors.red};
-
-  padding: 0.25rem;
 `;
 
 export default AddNote;

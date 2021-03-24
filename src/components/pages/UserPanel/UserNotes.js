@@ -2,14 +2,15 @@ import styled from "styled-components";
 
 import Note from "components/uiElements/Note";
 
-const UserNotes = ({ userNotes, setNotes }) => {
-  const handleNoteRemove = id => {
-    setNotes(prev => prev.filter(el => el._id !== id));
-  };
-
+const UserNotes = ({ userNotes, onNoteEdit, onNoteRemove }) => {
   const renderUserNotes = () => {
     return userNotes.map((note, index) => (
-      <Note key={index} {...note} removeNote={handleNoteRemove} />
+      <Note
+        key={index}
+        {...note}
+        onNoteEdit={onNoteEdit}
+        onNoteRemove={onNoteRemove}
+      />
     ));
   };
 
