@@ -213,7 +213,7 @@ const UserPanel = () => {
       <Settings isOpen={isSettingsOpen} setIsOpen={handleSettings} />
 
       {isLoading ? (
-        <Spinner text="Loading..." />
+        <Spinner text="Loading..." overlay={true} />
       ) : (
         <UserNotes
           userNotes={userNotes}

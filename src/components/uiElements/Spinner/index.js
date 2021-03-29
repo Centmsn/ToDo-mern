@@ -8,7 +8,7 @@ import { useEffect, useRef } from "react";
  * @param {Object} props - React props
  * @returns {JSX.Element}
  */
-const Spinner = ({ text }) => {
+const Spinner = ({ text, overlay = false }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -41,18 +41,30 @@ const Spinner = ({ text }) => {
   }, []);
 
   return (
-    <Container ref={containerRef}>
-      <LoadingSpinner d={50} color={"rgb(0, 222, 205)"}></LoadingSpinner>
-      <LoadingSpinner d={40} color={"rgb(51, 198, 212)"}></LoadingSpinner>
-      <LoadingSpinner d={30} color={"rgb(59, 161, 212)"}></LoadingSpinner>
-      <LoadingSpinner d={20} color={"rgb(49, 83, 140)"}></LoadingSpinner>
-      {text && <Description>{text}</Description>}
-    </Container>
+    <>
+      <Container ref={containerRef}>
+        <LoadingSpinner d={50} color={"rgb(0, 222, 205)"}></LoadingSpinner>
+        <LoadingSpinner d={40} color={"rgb(51, 198, 212)"}></LoadingSpinner>
+        <LoadingSpinner d={30} color={"rgb(59, 161, 212)"}></LoadingSpinner>
+        <LoadingSpinner d={20} color={"rgb(49, 83, 140)"}></LoadingSpinner>
+        {text && <Description>{text}</Description>}
+      </Container>
+
+      {overlay && <Overlay />}
+    </>
   );
 };
 
 Spinner.propTypes = {
+  /**
+   * Text which is display below the spinner
+   */
   text: PropTypes.string,
+
+  /**
+   * displays an overlay to block user interaction with the page
+   */
+  overlay: PropTypes.bool,
 };
 
 const Container = styled.div`
@@ -109,6 +121,17 @@ const LoadingSpinner = styled.div`
 
     background-color: white;
   }
+`;
+
+const Overlay = styled.div`
+  z-index: 9999;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background-color: rgba(125, 125, 125, 0.7);
 `;
 
 const Description = styled.p`
