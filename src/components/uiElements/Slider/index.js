@@ -147,7 +147,7 @@ const Draggable = styled.div.attrs(props => ({
 
   color: white;
   background-color: ${({ theme }) => theme.colors.blue};
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 5px;
 
   cursor: pointer;
@@ -158,6 +158,7 @@ const Label = styled.p`
   margin-bottom: 1rem;
   flex-basis: 100%;
 
+  color: white;
   user-select: none;
 `;
 

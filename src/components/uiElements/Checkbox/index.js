@@ -80,7 +80,7 @@ const Box = styled.div`
 
   color: ${({ theme }) => theme.colors.off};
 
-  padding: 3px;
+  padding: 0.2rem;
   cursor: pointer;
 
   &:hover {
@@ -91,6 +91,7 @@ const Box = styled.div`
 const Info = styled.p`
   line-height: 25px;
   user-select: none;
+  color: white;
 `;
 
 export default Checkbox;

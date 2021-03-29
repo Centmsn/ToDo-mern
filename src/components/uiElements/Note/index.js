@@ -25,21 +25,22 @@ const Note = ({ title, body, createdAt, _id, onNoteEdit, onNoteRemove }) => {
     <Wrapper>
       <NoteInfo>
         <NoteTitle>{title}</NoteTitle>
-        <NoteSettings>
-          <Icon onClick={handleNoteRemove} tooltip="Remove note">
-            <FontAwesomeIcon icon={faTrashAlt} />
-          </Icon>
 
-          <Icon onClick={handleNoteEdit} tooltip="Edit note">
-            <FontAwesomeIcon icon={faEdit} />
-          </Icon>
-        </NoteSettings>
         <NoteTime>
           <span>{dateString}</span> <span>{timeString}</span>
         </NoteTime>
       </NoteInfo>
 
       <p>{body}</p>
+      <NoteSettings>
+        <Icon onClick={handleNoteRemove} tooltip="Remove note">
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </Icon>
+
+        <Icon onClick={handleNoteEdit} tooltip="Edit note">
+          <FontAwesomeIcon icon={faEdit} />
+        </Icon>
+      </NoteSettings>
     </Wrapper>
   );
 };
@@ -53,6 +54,8 @@ const Wrapper = styled.div`
 
   box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.gray};
   border-radius: 5px;
+
+  color: ${({ theme }) => theme.colors.text};
 
   padding: 0.25rem;
   overflow-y: auto;
@@ -79,12 +82,13 @@ const NoteTime = styled.p`
 
 const NoteSettings = styled.div`
   position: relative;
-  flex-basis: 50%;
+
+  flex-basis: 100%;
 
   display: flex;
   justify-content: flex-end;
 
-  color: white;
+  color: ${({ theme }) => theme.colors.gray};
 `;
 
 const Icon = styled.span`
@@ -98,6 +102,8 @@ const Icon = styled.span`
     bottom: 0;
     left: 0;
 
+    color: ${({ theme }) => theme.colors.gray};
+
     visibility: hidden;
   }
 
@@ -106,15 +112,16 @@ const Icon = styled.span`
   }
 
   &:hover {
-    color: black;
+    color: ${({ theme }) => theme.colors.text};
   }
 `;
 
 const NoteTitle = styled.h6`
-  flex-basis: 50%;
-  font-size: 1.1rem;
+  flex-basis: 100%;
+  margin-bottom: 0.25rem;
 
-  color: black;
+  text-align: center;
+  font-size: 1.1rem;
 `;
 
 export default Note;

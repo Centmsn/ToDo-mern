@@ -68,6 +68,11 @@ const LoginForm = () => {
     : "Switch to signup";
 
   const titleContent = isInSignUpMode ? "Sign up" : "Log in";
+  let isButtonDisabled = !password || !email;
+
+  if (isInSignUpMode) {
+    isButtonDisabled = !password || !email || !name;
+  }
 
   return (
     <>
@@ -90,7 +95,11 @@ const LoginForm = () => {
           value={password}
         />
 
-        <Button as="button" onClick={handleFormSubmit}>
+        <Button
+          as="button"
+          onClick={handleFormSubmit}
+          disabled={isButtonDisabled}
+        >
           <span>Submit</span>
           <span>
             <FontAwesomeIcon icon={faPaperPlane} />

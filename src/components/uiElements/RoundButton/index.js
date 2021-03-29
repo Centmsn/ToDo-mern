@@ -61,7 +61,7 @@ const RoundBtn = styled.button`
     top: 2rem;
     right: 0;
     bottom: 0;
-    left: 2rem;
+    left: 25%;
 
     transform: translateX(${({ isActive }) => (isActive ? "0" : "-25%")});
     opacity: ${({ isActive }) => (isActive ? "1" : "0")};
