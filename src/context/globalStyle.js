@@ -1,4 +1,7 @@
 import { createGlobalStyle } from "styled-components";
+import { useContext } from "react";
+
+import SettingsContext from "context/Settings";
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -8,8 +11,13 @@ const GlobalStyle = createGlobalStyle`
         font-family: ${({ theme }) => theme.fonts.main};
     }
 
+    :root {
+
+    }
+
     body {
         overflow: hidden;
+        font-size: ${({ fontSize }) => fontSize}px;
     }
 
     a {
@@ -29,4 +37,9 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-export default GlobalStyle;
+const GlobalStyleProvider = ({ children }) => {
+  const { fontSize } = useContext(SettingsContext);
+  return <GlobalStyle fontSize={fontSize}>{children}</GlobalStyle>;
+};
+
+export default GlobalStyleProvider;

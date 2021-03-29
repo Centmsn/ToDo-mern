@@ -1,4 +1,4 @@
-import GlobalStyle from "../context/globalStyle";
+import GlobalStyleProvider from "../context/globalStyle";
 import { Switch, Route } from "react-router-dom";
 
 import { AuthContextProvider } from "../context/Auth";
@@ -15,7 +15,7 @@ const App = () => {
     <>
       <SettingsContextProvider>
         <Theme>
-          <GlobalStyle />
+          <GlobalStyleProvider />
 
           <AuthContextProvider>
             <MainContainer>
