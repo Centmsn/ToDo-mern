@@ -14,9 +14,7 @@ const Button = ({
       e.preventDefault();
     }
 
-    if (!disabled) {
-      if (typeof onClick === "function") onClick();
-    }
+    if (!disabled && typeof onClick === "function") onClick();
   };
 
   return (

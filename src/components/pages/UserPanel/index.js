@@ -120,7 +120,7 @@ const UserPanel = () => {
     try {
       const token = getSessionItem("token");
       await sendRequest(
-        `http://localhost:3001/api/notes/${id}`,
+        `${process.env.REACT_APP_BASE_URL}/notes/${id}`,
         "DELETE",
         null,
         { Authorization: `Bearer ${token}` }
@@ -157,10 +157,25 @@ const UserPanel = () => {
     setIsSettingsOpen(prev => !prev);
   };
 
+  const handleClearHistory = async () => {
+    const token = getSessionItem("token");
+    try {
+      await sendRequest(
+        `${process.env.REACT_APP_BASE_URL}/notes/history/user/${userID}`,
+        "DELETE",
+        null,
+        { Authorization: `Bearer ${token}` }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (!isLoggedIn) {
     return <Redirect to="/" />;
   }
 
+  // TODO change error code
   if (error) {
     return <Redirect to={{ pathname: "/error", state: { code: 401 } }} />;
   }
@@ -210,7 +225,11 @@ const UserPanel = () => {
         value={{ body: noteBody, title: noteTitle }}
       />
       <NotesHistory isOpen={isHistoryOpen} setIsOpen={handleNotesHistory} />
-      <Settings isOpen={isSettingsOpen} setIsOpen={handleSettings} />
+      <Settings
+        isOpen={isSettingsOpen}
+        setIsOpen={handleSettings}
+        handleClearHistory={handleClearHistory}
+      />
 
       {isLoading ? (
         <Spinner text="Loading..." overlay={true} />

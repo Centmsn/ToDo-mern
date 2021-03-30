@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
+import Button from "components/uiElements/Button";
 import Checkbox from "components/uiElements/Checkbox";
 import SideBar from "components/uiElements/SideBar";
 import SettingsContext from "context/Settings";
 import { useContext } from "react";
 import Slider from "components/uiElements/Slider";
 
-const Settings = ({ isOpen, setIsOpen }) => {
+const Settings = ({ isOpen, setIsOpen, handleClearHistory }) => {
   const { setDarkMode, setFontSize, fontSize } = useContext(SettingsContext);
 
   const handleDarkmode = () => {
@@ -16,7 +17,7 @@ const Settings = ({ isOpen, setIsOpen }) => {
   const handleFontSize = value => {
     setFontSize(value);
   };
-  console.log(fontSize);
+
   return (
     <SideBar isOpen={isOpen} setIsOpen={setIsOpen}>
       <Title>Settings</Title>
@@ -29,6 +30,13 @@ const Settings = ({ isOpen, setIsOpen }) => {
           value={fontSize}
         />
         <Checkbox description="Darkmode" onClick={handleDarkmode} />
+
+        <Section>
+          Removes all notes from the history. This operation cannot be undone.
+          <Button onClick={handleClearHistory}>
+            <span>Clear history</span>
+          </Button>
+        </Section>
       </Form>
     </SideBar>
   );
@@ -36,15 +44,25 @@ const Settings = ({ isOpen, setIsOpen }) => {
 
 const Form = styled.form`
   flex-basis: 90%;
+  height: 80%;
 
   display: flex;
-  justify-content: center;
-
   flex-wrap: wrap;
+  justify-content: center;
   align-self: flex-start;
 `;
 
+const Section = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+`;
+
 const Title = styled.h3`
+  z-index: 999;
   font-size: 2rem;
   color: white;
 `;

@@ -59,10 +59,11 @@ Checkbox.propTypes = {
 };
 
 const Wrapper = styled.div`
-  flex-basis: 20%;
+  margin-bottom: 1rem;
+  flex-basis: 100%;
 
   display: flex;
-  justify-content: right;
+  justify-content: center;
 `;
 
 const Box = styled.div`
