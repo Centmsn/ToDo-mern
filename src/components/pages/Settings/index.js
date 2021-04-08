@@ -33,7 +33,7 @@ const Settings = ({ isOpen, setIsOpen, handleClearHistory }) => {
 
         <Section>
           Removes all notes from the history. This operation cannot be undone.
-          <Button onClick={handleClearHistory}>
+          <Button onClick={handleClearHistory} danger={true}>
             <span>Clear history</span>
           </Button>
         </Section>

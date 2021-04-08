@@ -167,6 +167,7 @@ const UserPanel = () => {
         { Authorization: `Bearer ${token}` }
       );
     } catch (error) {
+      // !add error handling
       console.log(error);
     }
   };

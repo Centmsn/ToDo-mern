@@ -34,9 +34,11 @@ const Checkbox = ({
   const status = <FontAwesomeIcon icon={checkboxState ? faCheck : faTimes} />;
 
   return (
-    <Wrapper onClick={toggleCheckbox}>
+    <Wrapper>
       {description && <Info>{description.toUpperCase()}</Info>}
-      <Box isChecked={checkboxState}>{status}</Box>
+      <Box isChecked={checkboxState} onClick={toggleCheckbox}>
+        {status}
+      </Box>
     </Wrapper>
   );
 };

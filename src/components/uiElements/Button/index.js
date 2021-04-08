@@ -2,12 +2,26 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+/**
+ * Functional react component - renders button component
+ * @param {Object} props - react props
+ * @returns {JSX.Element}
+ * @example
+ * <Btn
+ *  onClick={() => console.log("clicked")
+ *  danger={true} path="/index.html"}
+ * >
+ *  <span>description</span>
+ * </Btn>
+ *
+ */
 const Button = ({
   path,
   onClick,
   children,
   isActive = false,
   disabled = false,
+  danger = false,
 }) => {
   const handleOnClick = e => {
     if (!path) {
@@ -24,6 +38,7 @@ const Button = ({
       onClick={handleOnClick}
       isActive={isActive}
       disabled={disabled}
+      danger={danger}
     >
       {children}
     </Btn>
@@ -50,6 +65,11 @@ Button.propTypes = {
    * if set to true component will not display hover effect, onClick function will not be triggered
    */
   disabled: PropTypes.bool,
+
+  /**
+   * Changes button theme to red
+   */
+  danger: PropTypes.bool,
 };
 
 const Btn = styled(Link)`
@@ -58,14 +78,17 @@ const Btn = styled(Link)`
 
   display: flex;
 
-  box-shadow: inset 0 0 0px 2px ${({ theme }) => theme.colors.off};
+  box-shadow: inset 0 0 0px 2px
+    ${({ theme, danger }) =>
+      danger ? theme.colors.red["500"] : theme.colors.off};
   border-radius: 5px;
 
   font-size: 1.5rem;
 
-  background-color: white;
+  background-color: ${({ danger, theme }) =>
+    danger ? theme.colors.red[200] : "white"};
   filter: grayscale(${({ disabled }) => (disabled ? "1" : "0")});
-  color: gray;
+  color: ${({ danger }) => (danger ? "white" : "gray")};
 
   padding: 1rem;
   transition: 300ms;
@@ -89,7 +112,8 @@ const Btn = styled(Link)`
 
     border-radius: 5px;
 
-    background-color: ${({ theme }) => theme.colors.off};
+    background-color: ${({ theme, danger }) =>
+      danger ? theme.colors.red["500"] : theme.colors.off};
     clip-path: ${({ isActive }) =>
       isActive ? "circle(100% at left bottom)" : "circle(0 at left bottom)"};
     transition: 0.4s linear;

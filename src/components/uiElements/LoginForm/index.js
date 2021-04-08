@@ -126,7 +126,7 @@ const FormError = styled.div`
 
   border-radius: 5px;
 
-  color: ${({ theme }) => theme.colors.red};
+  color: ${({ theme }) => theme.colors.red["500"]};
   background-color: rgb(237, 204, 197);
 
   padding: 0.5rem;
