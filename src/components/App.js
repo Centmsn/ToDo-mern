@@ -1,5 +1,5 @@
 import GlobalStyleProvider from "../context/globalStyle";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import { AuthContextProvider } from "../context/Auth";
 import { SettingsContextProvider } from "../context/Settings";
@@ -25,6 +25,7 @@ const App = () => {
                 <Route path="/" component={Home} exact />
                 <Route path="/error" component={Error} exact />
                 <Route path="/userPanel" component={UserPanel} />
+                <Redirect to="/" />
               </Switch>
             </MainContainer>
           </AuthContextProvider>

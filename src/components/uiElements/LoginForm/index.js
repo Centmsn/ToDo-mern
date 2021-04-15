@@ -36,7 +36,7 @@ const LoginForm = () => {
   const handleFormSubmit = async () => {
     try {
       const responseData = await sendRequest(
-        `http://localhost:3001/api/users/${
+        `${process.env.REACT_APP_BASE_URL}/users/${
           isInSignUpMode ? "signup" : "login"
         }`,
         "POST",
