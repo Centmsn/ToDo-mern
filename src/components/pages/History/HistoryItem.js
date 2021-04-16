@@ -6,9 +6,9 @@ import PropsTypes from "prop-types";
  * @param {Object} props - React props
  * @returns
  */
-const HistoryItem = ({ title, body, completed }) => {
+const HistoryItem = ({ title, body, completed, key }) => {
   return (
-    <Wrapper>
+    <Wrapper key={key}>
       <NoteTitle>{title}</NoteTitle>
       <NoteDate>Completed: {completed}</NoteDate>
       <NoteBody>{body}</NoteBody>
@@ -31,6 +31,11 @@ HistoryItem.propTypes = {
    * Date as a string when note was marked as completed
    */
   completed: PropsTypes.string.isRequired,
+
+  /**
+   * Unique key - react list key
+   */
+  key: PropsTypes.any.isRequired,
 };
 
 const Wrapper = styled.div`

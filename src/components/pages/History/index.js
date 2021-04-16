@@ -37,6 +37,16 @@ const NotesHistory = ({ isOpen, setIsOpen, openAddNote }) => {
   const renderHistoryNotes = () => {
     const notes = [];
 
+    if (error) {
+      // !temporary error handling
+      return (
+        <p>
+          Something went wrong... We couldn't find Your history. Please try
+          again later
+        </p>
+      );
+    }
+
     if (!historyNotes.length) {
       return (
         <NoHistory>
@@ -49,12 +59,17 @@ const NotesHistory = ({ isOpen, setIsOpen, openAddNote }) => {
       );
     }
 
-    historyNotes.map(note => {
+    historyNotes.map((note, index) => {
       const { title, body, date } = note;
       const completed =
         date.split("T")[0] + " " + date.split("T")[1].match(/\d*:\d*:\d*/);
       return notes.push(
-        <HistoryItem title={title} body={body} completed={completed} />
+        <HistoryItem
+          title={title}
+          body={body}
+          completed={completed}
+          key={index}
+        />
       );
     });
     return notes;
