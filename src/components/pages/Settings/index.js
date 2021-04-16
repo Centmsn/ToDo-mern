@@ -22,25 +22,32 @@ const Settings = ({ isOpen, setIsOpen, handleClearHistory }) => {
     <SideBar isOpen={isOpen} setIsOpen={setIsOpen}>
       <Title>Settings</Title>
       <Form>
-        <Radio
-          value={12}
-          description="Small"
-          onClick={handleFontSize}
-          active={fontSize === 12}
-        />
-        <Radio
-          value={16}
-          description="Medium"
-          onClick={handleFontSize}
-          active={fontSize === 16}
-        />
-        <Radio
-          value={20}
-          description="Large"
-          onClick={handleFontSize}
-          active={fontSize === 20}
-        />
-        <Checkbox description="Darkmode" onClick={handleDarkmode} />
+        <Section separator>
+          <h4>Choose font size</h4>
+          <Radio
+            value={12}
+            description="Small"
+            onClick={handleFontSize}
+            active={fontSize === 12}
+          />
+          <Radio
+            value={16}
+            description="Medium"
+            onClick={handleFontSize}
+            active={fontSize === 16}
+          />
+          <Radio
+            value={20}
+            description="Large"
+            onClick={handleFontSize}
+            active={fontSize === 20}
+          />
+        </Section>
+
+        <Section separator>
+          <h4>Turn off the lights</h4>
+          <Checkbox description="Darkmode" onClick={handleDarkmode} />
+        </Section>
 
         <Section>
           Removes all notes from the history. This operation cannot be undone.
@@ -64,12 +71,26 @@ const Form = styled.form`
 `;
 
 const Section = styled.section`
+  flex-basis: 100%;
+
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 
+  border-bottom: ${({ separator }) => (separator ? "2px" : 0)} solid
+    ${({ theme }) => theme.colors.gray};
+
   color: white;
+
+  h4 {
+    z-index: 999;
+    flex-basis: 100%;
+
+    font-size: 1.25rem;
+    text-align: center;
+    letter-spacing: 2px;
+  }
 `;
 
 const Title = styled.h3`

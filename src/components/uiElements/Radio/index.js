@@ -1,5 +1,11 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
+/**
+ * Functional React component - renders custom radio input
+ * @param {Object} props - React props
+ * @returns {JSX.Element}
+ */
 const Radio = ({
   active = null,
   value = null,
@@ -18,12 +24,35 @@ const Radio = ({
   );
 };
 
+Radio.propTypes = {
+  /**
+   * if true, radio will be displayed as an active input
+   */
+  active: PropTypes.bool,
+
+  /**
+   * value which is passed to the onClick function
+   */
+  value: PropTypes.any.isRequired,
+
+  /**
+   * function which is called on every click
+   */
+  onClick: PropTypes.func.isRequired,
+
+  /**
+   * optional input description
+   */
+  description: PropTypes.string,
+};
+
 const Label = styled.label`
+  text-align: center;
   color: white;
 `;
 
 const RadioInput = styled.div`
-  margin: 0 1rem;
+  margin: 1rem;
   position: relative;
 
   width: 1.75rem;
