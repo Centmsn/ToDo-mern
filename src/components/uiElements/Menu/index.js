@@ -93,6 +93,8 @@ const MenuBar = styled.div`
   align-items: center;
   justify-content: flex-end;
 
+  box-shadow: 0 0 4px 0 black;
+
   background-color: ${({ theme }) => theme.colors.main};
 
   padding: 0.5rem 0;

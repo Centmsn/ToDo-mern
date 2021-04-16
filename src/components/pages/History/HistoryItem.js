@@ -1,5 +1,11 @@
 import styled from "styled-components";
+import PropsTypes from "prop-types";
 
+/**
+ * Functional React component - renders removed note
+ * @param {Object} props - React props
+ * @returns
+ */
 const HistoryItem = ({ title, body, completed }) => {
   return (
     <Wrapper>
@@ -8,6 +14,23 @@ const HistoryItem = ({ title, body, completed }) => {
       <NoteBody>{body}</NoteBody>
     </Wrapper>
   );
+};
+
+HistoryItem.propTypes = {
+  /**
+   * Note title
+   */
+  title: PropsTypes.string.isRequired,
+
+  /**
+   * Note body
+   */
+  body: PropsTypes.string.isRequired,
+
+  /**
+   * Date as a string when note was marked as completed
+   */
+  completed: PropsTypes.string.isRequired,
 };
 
 const Wrapper = styled.div`

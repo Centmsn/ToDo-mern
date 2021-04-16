@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSurprise as farSurprise } from "@fortawesome/free-regular-svg-icons";
 
 import AuthContext from "context/Auth";
+import Button from "components/uiElements/Button";
 import HistoryItem from "./HistoryItem";
 import SideBar from "components/uiElements/SideBar";
 import Spinner from "components/uiElements/Spinner";
@@ -8,7 +11,7 @@ import { useHttpRequest } from "hooks/useHttpRequest";
 import { useEffect, useContext, useState } from "react";
 import { getSessionItem } from "utils/handleSessionStorage";
 
-const NotesHistory = ({ isOpen, setIsOpen }) => {
+const NotesHistory = ({ isOpen, setIsOpen, openAddNote }) => {
   const [historyNotes, setHistoryNotes] = useState([]);
   const { sendRequest, error, isLoading } = useHttpRequest();
   const { userID } = useContext(AuthContext);
@@ -35,7 +38,15 @@ const NotesHistory = ({ isOpen, setIsOpen }) => {
     const notes = [];
 
     if (!historyNotes.length) {
-      return <h3>No history found</h3>;
+      return (
+        <NoHistory>
+          <SubTitle as="h3">Your history is empty</SubTitle>
+          <Icon icon={farSurprise} />
+          <Button onClick={openAddNote}>
+            <span>Create new note!</span>
+          </Button>
+        </NoHistory>
+      );
     }
 
     historyNotes.map(note => {
@@ -61,6 +72,29 @@ const NotesHistory = ({ isOpen, setIsOpen }) => {
 
 const Title = styled.h2`
   color: white;
+  text-align: center;
+`;
+
+const SubTitle = styled(Title)`
+  flex-basis: 100%;
+
+  font-size: 1.5rem;
+`;
+
+const Icon = styled(FontAwesomeIcon)`
+  flex-basis: 100%;
+
+  font-size: 7rem;
+  color: ${({ theme }) => theme.colors.blue};
+`;
+
+const NoHistory = styled.div`
+  height: 75%;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 `;
 
 const NotesWrapper = styled.div`

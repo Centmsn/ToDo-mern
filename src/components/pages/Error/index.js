@@ -10,7 +10,7 @@ const Error = props => {
       </span>
       <h1>Uuppsss... something went wrong</h1>
       <h2>Please try to login again</h2>
-      <span>Error code: {props.location.state.code}</span>
+      <span>Error code: {props.location.state.code || "500"}</span>
     </Wrapper>
   );
 };

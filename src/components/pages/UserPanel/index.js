@@ -225,7 +225,11 @@ const UserPanel = () => {
         onTitleChange={setNoteTitle}
         value={{ body: noteBody, title: noteTitle }}
       />
-      <NotesHistory isOpen={isHistoryOpen} setIsOpen={handleNotesHistory} />
+      <NotesHistory
+        isOpen={isHistoryOpen}
+        setIsOpen={handleNotesHistory}
+        openAddNote={handleAddNote}
+      />
       <Settings
         isOpen={isSettingsOpen}
         setIsOpen={handleSettings}

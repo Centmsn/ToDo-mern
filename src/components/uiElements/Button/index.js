@@ -21,7 +21,7 @@ const Button = ({
   children,
   isActive = false,
   disabled = false,
-  danger = false,
+  danger = undefined,
 }) => {
   const handleOnClick = e => {
     if (!path) {

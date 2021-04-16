@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import AuthContext from "context/Auth";
 import Button from "components/uiElements/Button";
@@ -15,6 +16,7 @@ const LoginForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   const { error, isLoading, sendRequest, clearError } = useHttpRequest();
   const { setIsLoggedIn, setUserID } = useContext(AuthContext);
@@ -57,9 +59,11 @@ const LoginForm = () => {
         setIsLoggedIn(true);
         setUserID(responseData.userID);
         setSessionItem("token", responseData.token);
+        history.push("/userPanel");
       }
     } catch (err) {
       console.log(err);
+      history.push("/error");
     }
   };
 

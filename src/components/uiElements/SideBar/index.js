@@ -73,7 +73,7 @@ SideBar.propTypes = {
 
 const Bar = styled.div`
   position: absolute;
-  z-index: 99;
+  z-index: 9999;
   top: calc(100vh / 12);
   right: 0;
   bottom: 0;
@@ -83,9 +83,10 @@ const Bar = styled.div`
 
   display: flex;
   flex-wrap: wrap;
-
   justify-content: center;
   align-items: center;
+
+  box-shadow: 0 5px 4px 0 black;
 
   background: ${({ theme }) => theme.colors.main};
 
@@ -139,12 +140,16 @@ const CloseBtn = styled.button`
 `;
 
 const Backdrop = styled.div`
+  z-index: 999;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+
   display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+
+  background: rgb(75, 75, 75, 0.35);
 `;
 
 export default SideBar;
