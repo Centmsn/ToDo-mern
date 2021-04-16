@@ -26,6 +26,11 @@ const SideBar = ({ children, isOpen, setIsOpen, size = "30vw" }) => {
     };
   }, [setIsOpen]);
 
+  const handleIsOpen = () => {
+    setIsOpen();
+  };
+
+  // timeout depends on window size
   let timeout = size.match(/\d/g).join("") * 1;
 
   if (timeout < 100) timeout = timeout * 10;
@@ -42,7 +47,7 @@ const SideBar = ({ children, isOpen, setIsOpen, size = "30vw" }) => {
       >
         <Bar size={size}>
           {setIsOpen && (
-            <CloseBtn onClick={setIsOpen}>
+            <CloseBtn onClick={handleIsOpen}>
               <FontAwesomeIcon icon={faTimes} />
             </CloseBtn>
           )}
@@ -133,7 +138,8 @@ const CloseBtn = styled.button`
   color: white;
   transition: transform 300ms;
 
-  &:hover {
+  &:hover,
+  &:focus {
     transform: scale(1.25);
     color: ${({ theme }) => theme.colors.off};
   }

@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 
+import { handleChange } from "utils/handleButtonClick";
+
 /**
  * Functional React component - renders custom checkbox on the screen
  * @returns {JSX.Element}
@@ -25,10 +27,10 @@ const Checkbox = ({
    * Toggles checkbox and calls onClick callback provided to the component
    * @return {undefined}
    */
-  const toggleCheckbox = () => {
-    setCheckboxState(prev => !prev);
-    // pass current state to callback
-    onClick(!checkboxState);
+  const toggleCheckbox = e => {
+    if (handleChange(e, onClick, !checkboxState)) {
+      setCheckboxState(prev => !prev);
+    }
   };
 
   const status = <FontAwesomeIcon icon={checkboxState ? faCheck : faTimes} />;
@@ -36,7 +38,12 @@ const Checkbox = ({
   return (
     <Wrapper>
       {description && <Info>{description.toUpperCase()}</Info>}
-      <Box isChecked={checkboxState} onClick={toggleCheckbox}>
+      <Box
+        isChecked={checkboxState}
+        onClick={toggleCheckbox}
+        onKeyDown={toggleCheckbox}
+        tabIndex="0"
+      >
         {status}
       </Box>
     </Wrapper>
@@ -79,6 +86,7 @@ const Box = styled.div`
   align-items: center;
 
   border: 2px solid ${({ theme }) => theme.colors.off};
+  outline: none;
   border-radius: 5px;
 
   color: ${({ theme }) => theme.colors.off};
@@ -86,7 +94,8 @@ const Box = styled.div`
   padding: 0.2rem;
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${({ theme }) => theme.colors.blue};
   }
 `;

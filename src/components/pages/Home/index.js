@@ -6,6 +6,7 @@ import { faHistory } from "@fortawesome/free-solid-svg-icons";
 
 import PageContainer from "components/uiElements/PageContainer";
 import Footer from "components/uiElements/Footer";
+import TestAccount from "components/pages/Home/TestAccount";
 
 const Home = () => {
   return (
@@ -33,6 +34,7 @@ const Home = () => {
         <p>Mark as completed, delete, browse deleted, and much more!</p>
       </NoteCard>
 
+      <TestAccount />
       <Footer />
     </PageContainer>
   );

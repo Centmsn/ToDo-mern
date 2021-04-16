@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSurprise as farSurprise } from "@fortawesome/free-regular-svg-icons";
+import { faDizzy } from "@fortawesome/free-solid-svg-icons";
 
 import AuthContext from "context/Auth";
 import Button from "components/uiElements/Button";
@@ -40,10 +41,10 @@ const NotesHistory = ({ isOpen, setIsOpen, openAddNote }) => {
 
     if (error) {
       return (
-        <p>
+        <ErrorInfo>
           Something went wrong... We couldn't find Your history. Please try
           again later
-        </p>
+        </ErrorInfo>
       );
     }
 
@@ -88,6 +89,10 @@ const NotesHistory = ({ isOpen, setIsOpen, openAddNote }) => {
 const Title = styled.h2`
   color: white;
   text-align: center;
+`;
+
+const ErrorInfo = styled.p`
+  color: white;
 `;
 
 const SubTitle = styled(Title)`

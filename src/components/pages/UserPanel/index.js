@@ -3,7 +3,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faHistory } from "@fortawesome/free-solid-svg-icons";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
 import { Redirect } from "react-router-dom";
 
 import AuthContext from "context/Auth";
@@ -135,7 +135,7 @@ const UserPanel = () => {
     setUserNotes(prev => prev.filter(el => el._id !== id));
   };
 
-  const handleAddNote = () => {
+  const handleAddNote = useCallback(() => {
     setNoteBody("");
     setNoteTitle("");
     setCreateMode(true);
@@ -143,21 +143,21 @@ const UserPanel = () => {
     setIsSettingsOpen(false);
 
     setIsAddNoteOpen(prev => !prev);
-  };
+  }, []);
 
-  const handleNotesHistory = () => {
+  const handleNotesHistory = useCallback(() => {
     setIsAddNoteOpen(false);
     setIsSettingsOpen(false);
 
     setIsHistoryOpen(prev => !prev);
-  };
+  }, []);
 
-  const handleSettings = () => {
+  const handleSettings = useCallback(() => {
     setIsAddNoteOpen(false);
     setIsHistoryOpen(false);
 
     setIsSettingsOpen(prev => !prev);
-  };
+  }, []);
 
   const handleClearHistory = async () => {
     const token = getSessionItem("token");

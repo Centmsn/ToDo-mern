@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import { handleChange } from "utils/handleButtonClick";
+
 /**
  * Functional React component - renders custom radio input
  * @param {Object} props - React props
@@ -12,14 +14,14 @@ const Radio = ({
   onClick = () => {},
   description = "",
 }) => {
-  const handleOnClick = () => {
-    onClick(value);
+  const handleOnChange = e => {
+    handleChange(e, onClick, value);
   };
 
   return (
-    <Label onClick={handleOnClick}>
+    <Label onClick={handleOnChange}>
       {description}
-      <RadioInput active={active} />
+      <RadioInput active={active} tabIndex="0" onKeyDown={handleOnChange} />
     </Label>
   );
 };
@@ -59,11 +61,13 @@ const RadioInput = styled.div`
   height: 1.75rem;
 
   border-radius: 50%;
+  outline: none;
   box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.off};
 
   cursor: pointer;
 
-  &:hover::before {
+  &:hover::before,
+  &:focus::before {
     clip-path: circle(35% at center);
   }
 
@@ -78,7 +82,7 @@ const RadioInput = styled.div`
 
     border-radius: 50%;
 
-    background-color: ${({ theme }) => theme.colors.off};
+    background: ${({ theme }) => theme.colors.off};
 
     clip-path: ${({ active }) =>
       active ? "circle(35% at center)" : "circle(0 at center)"};
