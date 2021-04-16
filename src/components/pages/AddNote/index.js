@@ -49,6 +49,7 @@ const Form = styled.form`
 `;
 
 const FormTitle = styled.h3`
+  z-index: 999;
   margin-bottom: 5rem;
 
   font-size: 2rem;

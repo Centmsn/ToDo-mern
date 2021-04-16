@@ -1,4 +1,5 @@
 import Button from "components/uiElements/Button";
+import PropTypes from "prop-types";
 
 const MenuListItem = ({ text, path, icon, toggleMenuVisibility }) => {
   if (path) {
@@ -18,6 +19,13 @@ const MenuListItem = ({ text, path, icon, toggleMenuVisibility }) => {
       </li>
     );
   }
+};
+
+MenuListItem.propTypes = {
+  text: PropTypes.string.isRequired,
+  path: PropTypes.string,
+  icon: PropTypes.element.isRequired,
+  toggleMenuVisibility: PropTypes.func.isRequired,
 };
 
 export default MenuListItem;

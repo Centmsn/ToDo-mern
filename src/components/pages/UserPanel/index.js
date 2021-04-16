@@ -17,6 +17,8 @@ import Settings from "components/pages/Settings";
 import { useHttpRequest } from "hooks/useHttpRequest";
 import { getSessionItem } from "utils/handleSessionStorage";
 
+// TODO notes should be kept within app state
+// TODO request should be send in the background
 const UserPanel = () => {
   // TODO refactor to reducer?
   const [userNotes, setUserNotes] = useState([]);
@@ -266,9 +268,11 @@ const Title = styled.div`
   font-size: 2.25rem;
   text-align: center;
 
+  box-shadow: 0 0 5px 0 black;
   border-bottom: 2px solid ${({ theme }) => theme.colors.blue};
 
-  color: ${({ theme }) => theme.colors.gray};
+  color: white;
+  background: ${({ theme }) => theme.colors.blue};
 `;
 
 const ButtonContainer = styled.div`

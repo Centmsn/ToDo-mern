@@ -16,7 +16,8 @@ const NotesHistory = ({ isOpen, setIsOpen, openAddNote }) => {
   const { sendRequest, error, isLoading } = useHttpRequest();
   const { userID } = useContext(AuthContext);
 
-  // !fetch works on the first render only
+  //! data is fetched TOO OFTEN
+  //! on each open/close action history is fetched again
   useEffect(() => {
     const fetchHistory = async () => {
       const token = getSessionItem("token");
@@ -32,13 +33,12 @@ const NotesHistory = ({ isOpen, setIsOpen, openAddNote }) => {
       }
     };
     fetchHistory();
-  }, [sendRequest, userID]);
+  }, [sendRequest, userID, isOpen]);
 
   const renderHistoryNotes = () => {
     const notes = [];
 
     if (error) {
-      // !temporary error handling
       return (
         <p>
           Something went wrong... We couldn't find Your history. Please try

@@ -42,9 +42,11 @@ const Title = styled.div`
   font-size: 2.25rem;
   text-align: center;
 
+  box-shadow: 0 0 5px 0 black;
   border-bottom: 2px solid ${({ theme }) => theme.colors.blue};
 
-  color: ${({ theme }) => theme.colors.gray};
+  color: white;
+  background: ${({ theme }) => theme.colors.blue};
 `;
 
 export default UserNotes;

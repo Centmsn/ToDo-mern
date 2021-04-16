@@ -19,7 +19,7 @@ const Button = ({
   path,
   onClick,
   children,
-  isActive = false,
+  active = undefined,
   disabled = false,
   danger = undefined,
 }) => {
@@ -36,7 +36,7 @@ const Button = ({
       to={path}
       as={!path && "button"}
       onClick={handleOnClick}
-      isActive={isActive}
+      active={active}
       disabled={disabled}
       danger={danger}
     >
@@ -59,7 +59,7 @@ Button.propTypes = {
   /**
    * if set to true hover effect will be displayed permanently
    */
-  isActive: PropTypes.bool,
+  active: PropTypes.bool,
 
   /**
    * if set to true component will not display hover effect, onClick function will not be triggered
@@ -114,8 +114,8 @@ const Btn = styled(Link)`
 
     background-color: ${({ theme, danger }) =>
       danger ? theme.colors.red["500"] : theme.colors.off};
-    clip-path: ${({ isActive }) =>
-      isActive ? "circle(100% at left bottom)" : "circle(0 at left bottom)"};
+    clip-path: ${({ active }) =>
+      active ? "circle(100% at left bottom)" : "circle(0 at left bottom)"};
     transition: 0.4s linear;
   }
 

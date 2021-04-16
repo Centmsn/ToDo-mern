@@ -73,7 +73,7 @@ SideBar.propTypes = {
 
 const Bar = styled.div`
   position: absolute;
-  z-index: 9999;
+  z-index: 999;
   top: calc(100vh / 12);
   right: 0;
   bottom: 0;
@@ -86,7 +86,7 @@ const Bar = styled.div`
   justify-content: center;
   align-items: center;
 
-  box-shadow: 0 5px 4px 0 black;
+  box-shadow: 0 0 4px 0 black;
 
   background: ${({ theme }) => theme.colors.main};
 
