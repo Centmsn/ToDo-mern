@@ -5,7 +5,7 @@ import Checkbox from "components/uiElements/Checkbox";
 import SideBar from "components/uiElements/SideBar";
 import SettingsContext from "context/Settings";
 import { useContext } from "react";
-import Slider from "components/uiElements/Slider";
+import Radio from "components/uiElements/Radio";
 
 const Settings = ({ isOpen, setIsOpen, handleClearHistory }) => {
   const { setDarkMode, setFontSize, fontSize } = useContext(SettingsContext);
@@ -22,12 +22,23 @@ const Settings = ({ isOpen, setIsOpen, handleClearHistory }) => {
     <SideBar isOpen={isOpen} setIsOpen={setIsOpen}>
       <Title>Settings</Title>
       <Form>
-        <Slider
-          text="Font size"
-          min={12}
-          max={24}
-          onChange={handleFontSize}
-          value={fontSize}
+        <Radio
+          value={12}
+          description="Small"
+          onClick={handleFontSize}
+          active={fontSize === 12}
+        />
+        <Radio
+          value={16}
+          description="Medium"
+          onClick={handleFontSize}
+          active={fontSize === 16}
+        />
+        <Radio
+          value={20}
+          description="Large"
+          onClick={handleFontSize}
+          active={fontSize === 20}
         />
         <Checkbox description="Darkmode" onClick={handleDarkmode} />
 
