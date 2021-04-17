@@ -3,22 +3,24 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
+import { handleChange } from "utils/handleButtonClick";
+
 const Note = ({ title, body, createdAt, _id, onNoteEdit, onNoteRemove }) => {
   const dateString = createdAt.split("T")[0];
   const timeString = createdAt.match(/\d*:\d*:\d*/g);
 
-  const handleNoteRemove = () => {
-    onNoteRemove(_id);
+  const handleNoteRemove = e => {
+    handleChange(e, onNoteRemove, _id);
   };
 
-  const handleNoteEdit = () => {
+  const handleNoteEdit = e => {
     const noteData = {
       title,
       body,
       _id,
     };
 
-    onNoteEdit(noteData);
+    handleChange(e, onNoteEdit, noteData);
   };
 
   return (
@@ -33,11 +35,21 @@ const Note = ({ title, body, createdAt, _id, onNoteEdit, onNoteRemove }) => {
 
       <p>{body}</p>
       <NoteSettings>
-        <Icon onClick={handleNoteRemove} tooltip="Remove note">
+        <Icon
+          onClick={handleNoteRemove}
+          onKeyDown={handleNoteRemove}
+          tooltip="Remove note"
+          tabIndex="0"
+        >
           <FontAwesomeIcon icon={faTrashAlt} />
         </Icon>
 
-        <Icon onClick={handleNoteEdit} tooltip="Edit note">
+        <Icon
+          onClick={handleNoteEdit}
+          onKeyDown={handleNoteEdit}
+          tooltip="Edit note"
+          tabIndex="0"
+        >
           <FontAwesomeIcon icon={faEdit} />
         </Icon>
       </NoteSettings>
@@ -93,6 +105,8 @@ const NoteSettings = styled.div`
 
 const Icon = styled.span`
   margin: 0 0.5rem;
+
+  outline: none;
   cursor: pointer;
 
   &:after {
@@ -107,11 +121,13 @@ const Icon = styled.span`
     visibility: hidden;
   }
 
-  &:hover&:after {
+  &:hover:after,
+  &:focus:after {
     visibility: visible;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: ${({ theme }) => theme.colors.text};
   }
 `;

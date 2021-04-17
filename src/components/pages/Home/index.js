@@ -48,6 +48,7 @@ const NoteCard = styled.section`
   display: flex;
   flex-wrap: wrap;
 
+  box-shadow: 0 0 4px 0 ${({ theme }) => theme.colors.black};
   border: 2px solid ${({ theme }) => theme.colors.gray};
   border-radius: 10px;
 
