@@ -1,17 +1,18 @@
 {
   "files": {
-    "main.js": "/ToDo-mern/static/js/main.938eb9ea.chunk.js",
-    "main.js.map": "/ToDo-mern/static/js/main.938eb9ea.chunk.js.map",
+    "main.js": "/ToDo-mern/static/js/main.b1575feb.chunk.js",
+    "main.js.map": "/ToDo-mern/static/js/main.b1575feb.chunk.js.map",
     "runtime-main.js": "/ToDo-mern/static/js/runtime-main.b24566a7.js",
     "runtime-main.js.map": "/ToDo-mern/static/js/runtime-main.b24566a7.js.map",
-    "static/js/2.11ae6f1f.chunk.js": "/ToDo-mern/static/js/2.11ae6f1f.chunk.js",
-    "static/js/2.11ae6f1f.chunk.js.map": "/ToDo-mern/static/js/2.11ae6f1f.chunk.js.map",
+    "static/js/2.bd887102.chunk.js": "/ToDo-mern/static/js/2.bd887102.chunk.js",
+    "static/js/2.bd887102.chunk.js.map": "/ToDo-mern/static/js/2.bd887102.chunk.js.map",
     "index.html": "/ToDo-mern/index.html",
-    "static/js/2.11ae6f1f.chunk.js.LICENSE.txt": "/ToDo-mern/static/js/2.11ae6f1f.chunk.js.LICENSE.txt"
+    "static/js/2.bd887102.chunk.js.LICENSE.txt": "/ToDo-mern/static/js/2.bd887102.chunk.js.LICENSE.txt",
+    "static/js/main.b1575feb.chunk.js.LICENSE.txt": "/ToDo-mern/static/js/main.b1575feb.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.b24566a7.js",
-    "static/js/2.11ae6f1f.chunk.js",
-    "static/js/main.938eb9ea.chunk.js"
+    "static/js/2.bd887102.chunk.js",
+    "static/js/main.b1575feb.chunk.js"
   ]
 }
