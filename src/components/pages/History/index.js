@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSurprise as farSurprise } from "@fortawesome/free-regular-svg-icons";
-import { faDizzy } from "@fortawesome/free-solid-svg-icons";
 
 import AuthContext from "context/Auth";
 import Button from "components/uiElements/Button";
@@ -60,11 +59,13 @@ const NotesHistory = ({ isOpen, setIsOpen, openAddNote }) => {
       );
     }
 
-    historyNotes.map((note, index) => {
+    historyNotes.forEach((note, index) => {
       const { title, body, date } = note;
+
       const completed =
         date.split("T")[0] + " " + date.split("T")[1].match(/\d*:\d*:\d*/);
-      return notes.push(
+
+      notes.push(
         <HistoryItem
           title={title}
           body={body}

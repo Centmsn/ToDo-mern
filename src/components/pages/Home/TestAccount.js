@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 import gsap from "gsap";
 import styled from "styled-components";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const TestAccount = () => {
   const containerRef = useRef(null);

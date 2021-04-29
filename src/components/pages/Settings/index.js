@@ -6,7 +6,6 @@ import SideBar from "components/uiElements/SideBar";
 import SettingsContext from "context/Settings";
 import { useContext } from "react";
 import Radio from "components/uiElements/Radio";
-import { handleLocalStorage } from "utils/handleLocalStorage";
 
 const Settings = ({ isOpen, setIsOpen, handleClearHistory }) => {
   const { setDarkMode, setFontSize, fontSize, darkMode } = useContext(
@@ -20,8 +19,6 @@ const Settings = ({ isOpen, setIsOpen, handleClearHistory }) => {
   const handleFontSize = value => {
     setFontSize(value);
   };
-
-  const initialValue = () => {};
 
   return (
     <SideBar isOpen={isOpen} setIsOpen={setIsOpen}>
