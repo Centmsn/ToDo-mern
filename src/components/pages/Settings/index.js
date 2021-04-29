@@ -6,17 +6,22 @@ import SideBar from "components/uiElements/SideBar";
 import SettingsContext from "context/Settings";
 import { useContext } from "react";
 import Radio from "components/uiElements/Radio";
+import { handleLocalStorage } from "utils/handleLocalStorage";
 
 const Settings = ({ isOpen, setIsOpen, handleClearHistory }) => {
-  const { setDarkMode, setFontSize, fontSize } = useContext(SettingsContext);
+  const { setDarkMode, setFontSize, fontSize, darkMode } = useContext(
+    SettingsContext
+  );
 
-  const handleDarkmode = () => {
-    setDarkMode(prev => !prev);
+  const handleDarkmode = value => {
+    setDarkMode(value);
   };
 
   const handleFontSize = value => {
     setFontSize(value);
   };
+
+  const initialValue = () => {};
 
   return (
     <SideBar isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -46,7 +51,11 @@ const Settings = ({ isOpen, setIsOpen, handleClearHistory }) => {
 
         <Section separator>
           <h4>Turn off the lights</h4>
-          <Checkbox description="Darkmode" onClick={handleDarkmode} />
+          <Checkbox
+            description="Darkmode"
+            onClick={handleDarkmode}
+            value={darkMode}
+          />
         </Section>
 
         <Section>

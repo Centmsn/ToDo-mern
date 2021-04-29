@@ -3,7 +3,6 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 
 import { handleChange } from "utils/handleButtonClick";
 
@@ -11,35 +10,22 @@ import { handleChange } from "utils/handleButtonClick";
  * Functional React component - renders custom checkbox on the screen
  * @returns {JSX.Element}
  */
-const Checkbox = ({
-  description = "",
-  onClick = () => {},
-  initialValue = false,
-}) => {
-  const [checkboxState, setCheckboxState] = useState(false);
-
-  useEffect(() => {
-    // update state on active ID change
-    setCheckboxState(initialValue);
-  }, [initialValue]);
-
+const Checkbox = ({ description = "", onClick = () => {}, value }) => {
   /**
-   * Toggles checkbox and calls onClick callback provided to the component
-   * @return {undefined}
+   * Triggers callback function and flips the value
+   * @returns {undefined}
    */
   const toggleCheckbox = e => {
-    if (handleChange(e, onClick, !checkboxState)) {
-      setCheckboxState(prev => !prev);
-    }
+    handleChange(e, onClick, !value);
   };
 
-  const status = <FontAwesomeIcon icon={checkboxState ? faCheck : faTimes} />;
+  const status = <FontAwesomeIcon icon={value ? faCheck : faTimes} />;
 
   return (
     <Wrapper>
       {description && <Info>{description.toUpperCase()}</Info>}
       <Box
-        isChecked={checkboxState}
+        isChecked={value}
         onClick={toggleCheckbox}
         onKeyDown={toggleCheckbox}
         tabIndex="0"
@@ -62,9 +48,9 @@ Checkbox.propTypes = {
   onClick: PropTypes.func.isRequired,
 
   /**
-   * Initial value. True - checked.
+   * Checkbox state - is check if true is passed
    */
-  initialValue: PropTypes.bool,
+  value: PropTypes.bool.isRequired,
 };
 
 const Wrapper = styled.div`
