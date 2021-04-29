@@ -6,7 +6,6 @@ import SettingsContext from "../context/Settings";
 const Theme = ({ children }) => {
   const { darkMode } = useContext(SettingsContext);
 
-  // TODO: add darkmode
   const theme = {
     colors: {
       main: darkMode ? "rgb(121, 137, 140)" : "rgb(143, 193, 204)",

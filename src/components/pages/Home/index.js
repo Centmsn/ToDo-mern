@@ -20,7 +20,7 @@ const Home = () => {
       </NoteCard>
       <NoteCard area={"4/3/7/6"} order={0} dark></NoteCard>
       <NoteCard area={"8/2/11/4"} order={1} dark>
-        <h3>Upadate</h3>
+        <h3>Update</h3>
         <span>
           <FontAwesomeIcon icon={faEdit} />
         </span>
