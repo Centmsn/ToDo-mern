@@ -82,7 +82,7 @@ const LoginForm = () => {
     <>
       <FormTitle>{titleContent}</FormTitle>
 
-      {isLoading && <Spinner text="Please wait" />}
+      {isLoading && <Spinner overlay />}
 
       <Form>
         {error && <FormError>{error}</FormError>}
